@@ -1,0 +1,22 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Install dependencies and generate Prisma client
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Ensure Prisma Client is generated during build
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true

@@ -1,65 +1,507 @@
-import Image from "next/image";
+'use client'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Calendar, Users, MapPin, Home, Car, Plane, Compass, Search } from 'lucide-react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import Link from 'next/link'
 
-export default function Home() {
+const tabs = [
+  { id: 'hotels', label: 'HOTELS', icon: Home },
+  { id: 'cars', label: 'CARS', icon: Car },
+  { id: 'flights', label: 'FLIGHTS', icon: Plane },
+  { id: 'tours', label: 'TOURS', icon: Compass },
+]
+
+export default function HomePage() {
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState('hotels')
+  
+  // Hotel search state
+  const [hotelCity, setHotelCity] = useState('')
+  const [checkIn, setCheckIn] = useState(new Date())
+  const [checkOut, setCheckOut] = useState(new Date(Date.now() + 86400000))
+  const [hotelGuests, setHotelGuests] = useState(2)
+  const [hotelRooms, setHotelRooms] = useState(1)
+
+  // Car search state
+  const [pickupLocation, setPickupLocation] = useState('')
+  const [pickupDate, setPickupDate] = useState(new Date())
+  const [returnDate, setReturnDate] = useState(new Date(Date.now() + 86400000 * 3))
+  const [carTravellers, setCarTravellers] = useState(1)
+
+  // Flight search state
+  const [flightFrom, setFlightFrom] = useState('')
+  const [flightTo, setFlightTo] = useState('')
+  const [departDate, setDepartDate] = useState(new Date())
+  const [returnFlightDate, setReturnFlightDate] = useState(new Date(Date.now() + 86400000 * 7))
+  const [flightTravellers, setFlightTravellers] = useState(1)
+  const [tripType, setTripType] = useState('round')
+
+  // Tour search state
+  const [tourCity, setTourCity] = useState('')
+  const [tourDate, setTourDate] = useState(new Date())
+  const [tourTravellers, setTourTravellers] = useState(1)
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    switch(activeTab) {
+      case 'hotels':
+        router.push(`/hotels/results?city=${encodeURIComponent(hotelCity)}&checkIn=${checkIn.toISOString()}&checkOut=${checkOut.toISOString()}&guests=${hotelGuests}&rooms=${hotelRooms}`)
+        break
+      case 'cars':
+        router.push(`/cars/results?location=${encodeURIComponent(pickupLocation)}&pickup=${pickupDate.toISOString()}&return=${returnDate.toISOString()}&travellers=${carTravellers}`)
+        break
+      case 'flights':
+        router.push(`/flights/results?from=${encodeURIComponent(flightFrom)}&to=${encodeURIComponent(flightTo)}&depart=${departDate.toISOString()}&return=${returnFlightDate.toISOString()}&travellers=${flightTravellers}&tripType=${tripType}`)
+        break
+      case 'tours':
+        router.push(`/tours/results?city=${encodeURIComponent(tourCity)}&date=${tourDate.toISOString()}&travellers=${tourTravellers}`)
+        break
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section with Search */}
+      <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
+        <div className="container mx-auto px-4 py-16">
+          {/* Hero Content */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              Your Trip Starts Here!
+            </h1>
+            <p className="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto">
+              Let us help you plan your next journey — the one that will leave a lifetime of memories.
+            </p>
+          </div>
+
+          {/* Search Tabs */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-t-xl p-1 inline-flex flex-wrap">
+            {tabs.map((tab) => {
+              const Icon = tab.icon
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-white text-blue-900 shadow-lg'
+                      : 'text-white hover:bg-white/20'
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span>{tab.label}</span>
+                </button>
+              )
+            })}
+            <Link 
+              href="/more-services" 
+              className="flex items-center space-x-2 px-6 py-3 text-white hover:bg-white/20 rounded-lg font-medium transition-all"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <span>MORE SERVICES</span>
+            </Link>
+          </div>
+
+          {/* Dynamic Search Form */}
+          <div className="bg-white rounded-b-xl rounded-tr-xl p-6 md:p-8 shadow-2xl">
+            <form onSubmit={handleSearch}>
+              {/* HOTELS FORM */}
+              {activeTab === 'hotels' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <MapPin className="w-4 h-4 text-blue-600" />
+                      <span>Search By City</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Where are you going?"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      value={hotelCity}
+                      onChange={(e) => setHotelCity(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <Calendar className="w-4 h-4 text-blue-600" />
+                      <span>Check-in</span>
+                    </label>
+                    <DatePicker
+                      selected={checkIn}
+                      onChange={(date) => setCheckIn(date!)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      dateFormat="dd-MM-yyyy"
+                      minDate={new Date()}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <Calendar className="w-4 h-4 text-blue-600" />
+                      <span>Check-out</span>
+                    </label>
+                    <DatePicker
+                      selected={checkOut}
+                      onChange={(date) => setCheckOut(date!)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      dateFormat="dd-MM-yyyy"
+                      minDate={checkIn}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <Users className="w-4 h-4 text-blue-600" />
+                      <span>Travellers & Rooms</span>
+                    </label>
+                    <div className="flex space-x-2">
+                      <select 
+                        className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={hotelGuests}
+                        onChange={(e) => setHotelGuests(Number(e.target.value))}
+                      >
+                        {[1,2,3,4,5,6].map(num => (
+                          <option key={num} value={num}>{num} Guest{num > 1 ? 's' : ''}</option>
+                        ))}
+                      </select>
+                      <select 
+                        className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={hotelRooms}
+                        onChange={(e) => setHotelRooms(Number(e.target.value))}
+                      >
+                        {[1,2,3,4,5].map(num => (
+                          <option key={num} value={num}>{num} Room{num > 1 ? 's' : ''}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* CARS FORM */}
+              {activeTab === 'cars' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <MapPin className="w-4 h-4 text-blue-600" />
+                      <span>Pickup Location</span>
+                    </label>
+                    <select
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      value={pickupLocation}
+                      onChange={(e) => setPickupLocation(e.target.value)}
+                      required
+                    >
+                      <option value="">Select location</option>
+                      <option value="DXB">Dubai Airport (DXB)</option>
+                      <option value="AUH">Abu Dhabi Airport (AUH)</option>
+                      <option value="SHJ">Sharjah Airport (SHJ)</option>
+                      <option value="JFK">New York JFK</option>
+                      <option value="LHR">London Heathrow</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <Calendar className="w-4 h-4 text-blue-600" />
+                      <span>Pickup Date</span>
+                    </label>
+                    <DatePicker
+                      selected={pickupDate}
+                      onChange={(date) => setPickupDate(date!)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      dateFormat="dd-MM-yyyy"
+                      minDate={new Date()}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <Calendar className="w-4 h-4 text-blue-600" />
+                      <span>Return Date</span>
+                    </label>
+                    <DatePicker
+                      selected={returnDate}
+                      onChange={(date) => setReturnDate(date!)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      dateFormat="dd-MM-yyyy"
+                      minDate={pickupDate}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <Users className="w-4 h-4 text-blue-600" />
+                      <span>Travellers</span>
+                    </label>
+                    <select
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      value={carTravellers}
+                      onChange={(e) => setCarTravellers(Number(e.target.value))}
+                    >
+                      {[1,2,3,4,5,6,7,8].map(num => (
+                        <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              {/* FLIGHTS FORM */}
+              {activeTab === 'flights' && (
+                <div className="space-y-4">
+                  <div className="flex space-x-4 mb-4">
+                    <label className="flex items-center space-x-2">
+                      <input 
+                        type="radio" 
+                        value="round" 
+                        checked={tripType === 'round'}
+                        onChange={(e) => setTripType(e.target.value)}
+                        className="w-4 h-4 text-blue-600"
+                      />
+                      <span className="text-gray-700">Round Trip</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input 
+                        type="radio" 
+                        value="oneway" 
+                        checked={tripType === 'oneway'}
+                        onChange={(e) => setTripType(e.target.value)}
+                        className="w-4 h-4 text-blue-600"
+                      />
+                      <span className="text-gray-700">One Way</span>
+                    </label>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                        <MapPin className="w-4 h-4 text-blue-600" />
+                        <span>From</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Departure city"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={flightFrom}
+                        onChange={(e) => setFlightFrom(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                        <MapPin className="w-4 h-4 text-blue-600" />
+                        <span>To</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Destination city"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={flightTo}
+                        onChange={(e) => setFlightTo(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                        <Calendar className="w-4 h-4 text-blue-600" />
+                        <span>Depart</span>
+                      </label>
+                      <DatePicker
+                        selected={departDate}
+                        onChange={(date) => setDepartDate(date!)}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        dateFormat="dd-MM-yyyy"
+                        minDate={new Date()}
+                      />
+                    </div>
+                    {tripType === 'round' && (
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                          <Calendar className="w-4 h-4 text-blue-600" />
+                          <span>Return</span>
+                        </label>
+                        <DatePicker
+                          selected={returnFlightDate}
+                          onChange={(date) => setReturnFlightDate(date!)}
+                          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          dateFormat="dd-MM-yyyy"
+                          minDate={departDate}
+                        />
+                      </div>
+                    )}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                        <Users className="w-4 h-4 text-blue-600" />
+                        <span>Travellers</span>
+                      </label>
+                      <select
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={flightTravellers}
+                        onChange={(e) => setFlightTravellers(Number(e.target.value))}
+                      >
+                        {[1,2,3,4,5,6,7,8,9].map(num => (
+                          <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TOURS FORM */}
+              {activeTab === 'tours' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <MapPin className="w-4 h-4 text-blue-600" />
+                      <span>Destination</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Where to?"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      value={tourCity}
+                      onChange={(e) => setTourCity(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <Calendar className="w-4 h-4 text-blue-600" />
+                      <span>Tour Date</span>
+                    </label>
+                    <DatePicker
+                      selected={tourDate}
+                      onChange={(date) => setTourDate(date!)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      dateFormat="dd-MM-yyyy"
+                      minDate={new Date()}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                      <Users className="w-4 h-4 text-blue-600" />
+                      <span>Travellers</span>
+                    </label>
+                    <select
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      value={tourTravellers}
+                      onChange={(e) => setTourTravellers(Number(e.target.value))}
+                    >
+                      {[1,2,3,4,5,6,7,8].map(num => (
+                        <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex items-end">
+                    <button
+                      type="submit"
+                      className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all font-semibold flex items-center justify-center space-x-2"
+                    >
+                      <Search className="w-5 h-5" />
+                      <span>Search Tours</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Submit Button for other tabs */}
+              {activeTab !== 'tours' && (
+                <div className="mt-6 flex justify-center">
+                  <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-12 py-4 rounded-lg hover:bg-blue-700 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
+                  >
+                    Search {activeTab}
+                  </button>
+                </div>
+              )}
+            </form>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Popular Destinations */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Popular Destinations</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {['Dubai', 'Paris', 'Tokyo', 'New York', 'London', 'Rome', 'Sydney', 'Bangkok'].map((city) => (
+              <Link
+                key={city}
+                href={`/hotels/results?city=${city}`}
+                className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition"
+              >
+                <div className="h-40 bg-gradient-to-br from-blue-500 to-blue-600"></div>
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <h3 className="text-xl font-bold">{city}</h3>
+                  <p className="text-sm">From $499</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Featured Hotels */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold">Featured Hotels</h2>
+            <Link href="/hotels" className="text-blue-600 hover:text-blue-700 font-semibold">View All →</Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <div className="h-48 bg-gray-300"></div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-lg mb-1">Luxury Hotel {i}</h3>
+                  <p className="text-gray-600 text-sm mb-2">Dubai, UAE</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-600 font-bold">$199/night</span>
+                    <Link href={`/hotels/${i}`} className="text-blue-600 text-sm font-medium">Book Now →</Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="py-16 bg-blue-600 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-12">Why Choose Angel Wings?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Best Price Guarantee</h3>
+              <p className="text-blue-100">Find a lower price? We'll match it.</p>
+            </div>
+            <div>
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">24/7 Customer Support</h3>
+              <p className="text-blue-100">We're here to help anytime.</p>
+            </div>
+            <div>
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Secure Payments</h3>
+              <p className="text-blue-100">Your data is always protected.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
