@@ -98,7 +98,7 @@ model Booking {
   paymentStatus   PaymentStatus @default(PENDING)
   paymentId       String?
   
-  // Relations
+  // Relations - Fixed: Added room relation
   flightId        String?
   flight          Flight?     @relation(fields: [flightId], references: [id])
   
