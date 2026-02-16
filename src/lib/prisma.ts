@@ -4,7 +4,7 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-// Pass DATABASE_URL directly to PrismaClient constructor
+// IMPORTANT: Pass DATABASE_URL directly to PrismaClient constructor
 export const prisma = new PrismaClient({
   datasources: {
     db: {
