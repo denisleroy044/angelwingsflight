@@ -129,7 +129,6 @@ enum PaymentStatus {
   FAILED
 }
 
-// NextAuth required models
 model Account {
   id                String  @id @default(cuid())
   userId            String
