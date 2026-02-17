@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { toast } from 'react-hot-toast'
-import { createBooking, getUserBookings } from '@/lib/db'
 
 export interface CartItem {
   id: string
@@ -16,27 +15,26 @@ export interface CartItem {
   date?: string
   bookingId?: string
   status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+  bookedAt?: string
 }
 
 interface CartState {
   items: CartItem[]
-  bookings: CartItem[]
   addItem: (item: CartItem) => void
   removeItem: (id: string) => void
   updateQuantity: (id: string, quantity: number) => void
   clearCart: () => void
   getTotal: () => number
   getItemCount: () => number
-  checkout: (userId: string) => Promise<{ success: boolean; bookingId?: string }>
-  loadUserBookings: (userId: string) => Promise<void>
-  updateBookingStatus: (bookingId: string, status: string) => void
+  checkout: () => Promise<{ success: boolean; bookingId?: string }>
+  loadBookings: () => CartItem[]
+  updateBookingStatus: (bookingId: string, status: 'pending' | 'confirmed' | 'cancelled' | 'completed') => void
 }
 
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
-      bookings: [],
       
       addItem: (item) => {
         const items = get().items
@@ -90,80 +88,52 @@ export const useCartStore = create<CartState>()(
         return get().items.reduce((count, item) => count + item.quantity, 0)
       },
 
-      checkout: async (userId: string) => {
+      checkout: async () => {
         const items = get().items
         if (items.length === 0) {
           toast.error('Your cart is empty')
           return { success: false }
         }
 
-        try {
-          // Create booking in database
-          const bookingPromises = items.map(async (item) => {
-            const bookingData = {
-              userId,
-              bookingType: item.type.toUpperCase(),
-              totalPrice: item.price * item.quantity,
-              flightId: item.type === 'flight' ? item.id : null,
-              hotelId: item.type === 'hotel' ? item.id : null,
-              carId: item.type === 'car' ? item.id : null,
-              passengers: item.details,
-              checkInDate: item.date ? new Date(item.date) : null,
-            }
-            
-            const result = await createBooking(bookingData)
-            return result
-          })
+        // Generate booking ID
+        const bookingId = 'BK' + Date.now().toString().slice(-8)
+        
+        // Update items with booking ID and status
+        const bookedItems = items.map(item => ({
+          ...item,
+          bookingId,
+          status: 'pending' as const,
+          bookedAt: new Date().toISOString()
+        }))
 
-          const results = await Promise.all(bookingPromises)
-          
-          if (results.every(r => r.success)) {
-            // Clear cart
-            set({ items: [] })
-            toast.success('Checkout successful! Your booking is pending confirmation.')
-            
-            // Reload bookings
-            await get().loadUserBookings(userId)
-            
-            return { success: true, bookingId: results[0].booking?.id }
-          } else {
-            toast.error('Checkout failed. Please try again.')
-            return { success: false }
-          }
-        } catch (error) {
-          console.error('Checkout error:', error)
-          toast.error('Checkout failed. Please try again.')
-          return { success: false }
-        }
+        // Save to localStorage as bookings
+        const existingBookings = JSON.parse(localStorage.getItem('bookings') || '[]')
+        localStorage.setItem('bookings', JSON.stringify([...existingBookings, ...bookedItems]))
+
+        // Clear cart
+        set({ items: [] })
+        
+        toast.success('Checkout successful! Booking is pending confirmation.')
+        return { success: true, bookingId }
       },
 
-      loadUserBookings: async (userId: string) => {
+      loadBookings: () => {
         try {
-          const result = await getUserBookings(userId)
-          if (result.success && result.bookings) {
-            // Convert database bookings to CartItem format
-            const bookings = result.bookings.map((b: any) => ({
-              id: b.id,
-              bookingId: b.bookingNumber,
-              type: b.bookingType.toLowerCase(),
-              name: b.flight?.airline || b.hotel?.name || b.car?.model || 'Booking',
-              price: b.totalPrice,
-              quantity: 1,
-              status: b.status.toLowerCase(),
-              date: b.checkInDate,
-              details: b,
-              image: b.flight?.image || b.hotel?.image || b.car?.image,
-            }))
-            set({ bookings })
-          }
-        } catch (error) {
-          console.error('Error loading bookings:', error)
+          const bookings = JSON.parse(localStorage.getItem('bookings') || '[]')
+          return bookings
+        } catch {
+          return []
         }
       },
 
       updateBookingStatus: (bookingId, status) => {
-        // This will be handled by API call
-        toast.success(`Booking ${status}`)
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]')
+        const updatedBookings = bookings.map((booking: CartItem) => 
+          booking.bookingId === bookingId ? { ...booking, status } : booking
+        )
+        localStorage.setItem('bookings', JSON.stringify(updatedBookings))
+        toast.success(`Booking ${status} successfully`)
+        window.dispatchEvent(new Event('storage'))
       }
     }),
     {
