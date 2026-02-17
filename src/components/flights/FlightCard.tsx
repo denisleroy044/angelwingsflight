@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { Plane, Clock, Users, Briefcase } from 'lucide-react'
 import Link from 'next/link'
@@ -78,7 +79,7 @@ export default function FlightCard({ flight }: FlightCardProps) {
             className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium whitespace-nowrap"
           >
             Book Now
-          </Link>
+          </DynamicLink>
         </div>
       </div>
 
@@ -88,9 +89,9 @@ export default function FlightCard({ flight }: FlightCardProps) {
           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Free Cancellation</span>
           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Baggage Included</span>
         </div>
-        <Link href={`/flights/${flight.id}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+        <DynamicLink href={`/flights/${flight.id}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
           View Details
-        </Link>
+        </DynamicLink>
       </div>
     </div>
   )

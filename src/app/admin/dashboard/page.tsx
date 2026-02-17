@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
@@ -115,7 +116,7 @@ export default function AdminDashboardPage() {
           </div>
           <p className="text-2xl font-bold text-gray-900">${stats.totalRevenue.toLocaleString()}</p>
           <p className="text-sm text-gray-600">Total Revenue</p>
-        </Link>
+        </DynamicLink>
 
         <Link href="/admin/bookings" className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group">
           <div className="flex items-center justify-between mb-2">
@@ -129,7 +130,7 @@ export default function AdminDashboardPage() {
           </div>
           <p className="text-2xl font-bold text-gray-900">{stats.totalBookings}</p>
           <p className="text-sm text-gray-600">Total Bookings</p>
-        </Link>
+        </DynamicLink>
 
         <Link href="/admin/users" className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group">
           <div className="flex items-center justify-between mb-2">
@@ -143,7 +144,7 @@ export default function AdminDashboardPage() {
           </div>
           <p className="text-2xl font-bold text-gray-900">{stats.totalUsers}</p>
           <p className="text-sm text-gray-600">Total Users</p>
-        </Link>
+        </DynamicLink>
 
         <Link href="/admin/bookings" className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group">
           <div className="flex items-center justify-between mb-2">
@@ -157,7 +158,7 @@ export default function AdminDashboardPage() {
           </div>
           <p className="text-2xl font-bold text-gray-900">{stats.activeBookings}</p>
           <p className="text-sm text-gray-600">Active Bookings</p>
-        </Link>
+        </DynamicLink>
       </div>
 
       {/* Charts */}
@@ -169,7 +170,7 @@ export default function AdminDashboardPage() {
             <Link href="/admin/bookings" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
               View Details
               <ChevronRight className="w-4 h-4 ml-1" />
-            </Link>
+            </DynamicLink>
           </div>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={revenueData}>
@@ -217,7 +218,7 @@ export default function AdminDashboardPage() {
           <Link href="/admin/bookings" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
             View All
             <ChevronRight className="w-4 h-4 ml-1" />
-          </Link>
+          </DynamicLink>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">

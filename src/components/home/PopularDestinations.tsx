@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 import Link from 'next/link';
 
 const destinations = [
@@ -24,7 +25,7 @@ export default function PopularDestinations() {
               <h3 className="text-xl font-bold">{dest.city}</h3>
               <p className="text-sm text-gray-600">{dest.country}</p>
               <p className="mt-2 font-semibold text-blue-600">From ${dest.price}</p>
-            </Link>
+            </DynamicLink>
           ))}
         </div>
       </div>

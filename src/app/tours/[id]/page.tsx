@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { useState } from 'react'
 import { useParams } from 'next/navigation'
@@ -88,9 +89,9 @@ export default function TourDetailPage() {
       <div className="container-custom py-8">
         {/* Breadcrumb */}
         <div className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-          <Link href="/" className="hover:text-blue-600">Home</Link>
+          <Link href="/" className="hover:text-blue-600">Home</DynamicLink>
           <ChevronRight className="w-4 h-4" />
-          <Link href="/tours" className="hover:text-blue-600">Tours</Link>
+          <Link href="/tours" className="hover:text-blue-600">Tours</DynamicLink>
           <ChevronRight className="w-4 h-4" />
           <span className="text-gray-900 font-medium">{tourData.name}</span>
         </div>
@@ -291,7 +292,7 @@ export default function TourDetailPage() {
                 className="block w-full bg-blue-600 text-white text-center px-6 py-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg mb-3"
               >
                 Book Now
-              </Link>
+              </DynamicLink>
               <button className="w-full border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium">
                 Send Inquiry
               </button>
@@ -318,9 +319,9 @@ export default function TourDetailPage() {
                 <div className="p-4">
                   <h3 className="font-semibold mb-2">Amazing Tour Package</h3>
                   <p className="text-blue-600 font-bold">USD 499</p>
-                  <Link href={`/tours/${i}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-2 block">
+                  <DynamicLink href={`/tours/${i}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-2 block">
                     View Details →
-                  </Link>
+                  </DynamicLink>
                 </div>
               </div>
             ))}

@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
@@ -38,9 +39,9 @@ export default function BlogDetailPage() {
       <div className="container-custom py-8">
         {/* Breadcrumb */}
         <div className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-          <Link href="/" className="hover:text-blue-600">Home</Link>
+          <Link href="/" className="hover:text-blue-600">Home</DynamicLink>
           <ChevronRight className="w-4 h-4" />
-          <Link href="/blogs" className="hover:text-blue-600">Blogs</Link>
+          <Link href="/blogs" className="hover:text-blue-600">Blogs</DynamicLink>
           <ChevronRight className="w-4 h-4" />
           <span className="text-gray-900 font-medium line-clamp-1">{blogData.title}</span>
         </div>
@@ -136,7 +137,7 @@ export default function BlogDetailPage() {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Related Posts</h3>
               <div className="space-y-4">
                 {[1,2,3].map((i) => (
-                  <Link key={i} href={`/blogs/${i}`} className="flex space-x-3 group">
+                  <DynamicLink key={i} href={`/blogs/${i}`} className="flex space-x-3 group">
                     <div className="w-20 h-20 bg-gray-200 rounded-lg flex-shrink-0"></div>
                     <div>
                       <h4 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
@@ -144,7 +145,7 @@ export default function BlogDetailPage() {
                       </h4>
                       <p className="text-xs text-gray-500 mt-1">5 min read</p>
                     </div>
-                  </Link>
+                  </DynamicLink>
                 ))}
               </div>
 
@@ -160,7 +161,7 @@ export default function BlogDetailPage() {
                     >
                       <span className="text-gray-600 group-hover:text-blue-600 transition-colors">{cat}</span>
                       <span className="text-sm text-gray-400">(12)</span>
-                    </Link>
+                    </DynamicLink>
                   ))}
                 </div>
               </div>

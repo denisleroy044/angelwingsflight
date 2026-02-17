@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
@@ -96,7 +97,7 @@ export default function WishlistPage() {
           >
             <ShoppingBag className="w-4 h-4" />
             <span>Browse More</span>
-          </Link>
+          </DynamicLink>
         </div>
 
         {items.length === 0 ? (
@@ -111,7 +112,7 @@ export default function WishlistPage() {
               className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Explore Destinations
-            </Link>
+            </DynamicLink>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

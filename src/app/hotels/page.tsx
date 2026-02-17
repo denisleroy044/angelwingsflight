@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import HotelSearchForm from '@/components/hotels/HotelSearchForm'
@@ -79,7 +80,7 @@ export default function HotelsPage() {
       <div className="container-custom py-8">
         {/* Breadcrumb */}
         <div className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-          <Link href="/" className="hover:text-blue-600">Home</Link>
+          <Link href="/" className="hover:text-blue-600">Home</DynamicLink>
           <ChevronRight className="w-4 h-4" />
           <span className="text-gray-900 font-medium">Hotels</span>
         </div>
@@ -102,7 +103,7 @@ export default function HotelsPage() {
             >
               View More
               <ChevronRight className="w-5 h-5 ml-1" />
-            </Link>
+            </DynamicLink>
           </div>
 
           {/* Hotel Grid */}
@@ -124,7 +125,7 @@ export default function HotelsPage() {
                 className="bg-white rounded-lg p-4 text-center shadow-sm hover:shadow-md transition-shadow"
               >
                 <span className="font-medium text-gray-700">{city}</span>
-              </Link>
+              </DynamicLink>
             ))}
           </div>
         </section>

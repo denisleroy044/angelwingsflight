@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { Calendar, User, Clock, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
@@ -58,7 +59,7 @@ export default function BlogCard({ blog, featured = false }: BlogCardProps) {
         >
           Read More
           <ChevronRight className="w-4 h-4 ml-1" />
-        </Link>
+        </DynamicLink>
       </div>
     </div>
   )

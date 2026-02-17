@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { MapPin, Star, Wifi, Coffee, Users, ParkingCircle, Dumbbell, Waves } from 'lucide-react'
 import Link from 'next/link'
@@ -95,7 +96,7 @@ export default function HotelCard({ hotel, featured = false }: HotelCardProps) {
             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
             Details
-          </Link>
+          </DynamicLink>
         </div>
       </div>
     </div>

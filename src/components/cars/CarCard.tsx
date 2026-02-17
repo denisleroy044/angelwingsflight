@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { Car, Users, Gauge, Fuel, Calendar } from 'lucide-react'
 import Link from 'next/link'
@@ -73,7 +74,7 @@ export default function CarCard({ car, featured = false }: CarCardProps) {
             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
             Book Now
-          </Link>
+          </DynamicLink>
         </div>
       </div>
     </div>

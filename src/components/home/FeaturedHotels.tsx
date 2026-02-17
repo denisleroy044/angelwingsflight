@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 import { Star, MapPin } from 'lucide-react'
 import Link from 'next/link'
 
@@ -75,7 +76,7 @@ export default function FeaturedHotels() {
             <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-          </Link>
+          </DynamicLink>
         </div>
 
         {/* Featured Hotels Grid */}
@@ -110,7 +111,7 @@ export default function FeaturedHotels() {
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium"
                   >
                     Book Now
-                  </Link>
+                  </DynamicLink>
                 </div>
               </div>
             </div>
@@ -129,9 +130,9 @@ export default function FeaturedHotels() {
                 <p className="text-sm text-gray-600 truncate">{hotel.location}</p>
                 <div className="flex items-center justify-between mt-2">
                   <span className="text-lg font-bold text-blue-600">USD {hotel.price}.00</span>
-                  <Link href={`/hotels/${hotel.id}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                  <DynamicLink href={`/hotels/${hotel.id}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
                     Book Now
-                  </Link>
+                  </DynamicLink>
                 </div>
               </div>
             </div>

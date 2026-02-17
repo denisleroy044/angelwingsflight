@@ -1,3 +1,4 @@
+import DynamicLink from '@/components/ui/DynamicLink'
 import Link from 'next/link'
 import { ChevronRight, Star } from 'lucide-react'
 import TourSearchForm from '@/components/tours/TourSearchForm'
@@ -81,7 +82,7 @@ export default function ToursPage() {
       <div className="container-custom py-8">
         {/* Breadcrumb */}
         <div className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-          <Link href="/" className="hover:text-blue-600">Home</Link>
+          <Link href="/" className="hover:text-blue-600">Home</DynamicLink>
           <ChevronRight className="w-4 h-4" />
           <span className="text-gray-900 font-medium">Tours</span>
         </div>
@@ -104,7 +105,7 @@ export default function ToursPage() {
             >
               View More
               <ChevronRight className="w-5 h-5 ml-1" />
-            </Link>
+            </DynamicLink>
           </div>
 
           {/* Featured Tour - Large */}
@@ -142,7 +143,7 @@ export default function ToursPage() {
               className="mt-4 md:mt-0 bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
             >
               View Deals
-            </Link>
+            </DynamicLink>
           </div>
         </section>
 
@@ -157,7 +158,7 @@ export default function ToursPage() {
                 className="bg-white rounded-lg p-4 text-center shadow-sm hover:shadow-md transition-shadow"
               >
                 <span className="font-medium text-gray-700">{dest}</span>
-              </Link>
+              </DynamicLink>
             ))}
           </div>
         </div>
