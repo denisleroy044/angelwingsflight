@@ -97,13 +97,13 @@ export default function BlogDetailPage() {
                   <h3 className="text-sm font-medium text-gray-700 mb-3">Tags:</h3>
                   <div className="flex flex-wrap gap-2">
                     {blogData.tags.map((tag) => (
-                      <Link
+                      <a
                         key={tag}
                         href={`/blogs/tag/${tag.toLowerCase()}`}
                         className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition-colors"
                       >
                         {tag}
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 </div>
