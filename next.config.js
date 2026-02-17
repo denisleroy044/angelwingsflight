@@ -12,9 +12,17 @@ const nextConfig = {
       },
     ],
   },
-  // Fix deprecation warnings
-  skipTrailingSlashRedirect: true,
-  typedRoutes: true,
+  // Force client-side rendering for all pages
+  output: 'standalone',
+  // Disable static optimization
+  experimental: {
+    workerThreads: false,
+    cpus: 1,
+  },
+  // Ensure all pages are dynamic
+  serverRuntimeConfig: {
+    dynamic: true,
+  },
 }
 
 module.exports = nextConfig

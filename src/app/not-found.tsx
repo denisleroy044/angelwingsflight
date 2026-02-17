@@ -1,6 +1,13 @@
+'use client'
+
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 export default function NotFound() {
+  useEffect(() => {
+    console.log('404 page rendered')
+  }, [])
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
       <div className="text-center max-w-md">
