@@ -67,13 +67,14 @@ export default function CheckoutPage() {
       
       // Redirect to confirmation after 3 seconds
       setTimeout(() => {
-        router.push('/booking/confirmation')
+        // Use window.location for absolute path to avoid type issues
+        window.location.href = '/booking/confirmation'
       }, 3000)
     }, 2000)
   }
 
   if (items.length === 0 && !isComplete) {
-    return null // Don't render anything while redirecting
+    return null
   }
 
   if (isComplete) {
