@@ -13,8 +13,6 @@ export default function SignoutModal({ isOpen, onClose }: SignoutModalProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
-  if (!isOpen) return null
-
   const handleSignOut = async () => {
     setIsLoading(true)
     try {
@@ -30,9 +28,11 @@ export default function SignoutModal({ isOpen, onClose }: SignoutModalProps) {
     }
   }
 
+  if (!isOpen) return null
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full animate-fade-in">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-gray-900">Sign Out</h3>

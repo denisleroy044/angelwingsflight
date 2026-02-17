@@ -104,3 +104,22 @@ html {
 .animate-fade-in {
   animation: fade-in 0.2s ease-out;
 }
+
+/* Ensure no stuck overlays */
+.fixed.inset-0.z-50 {
+  pointer-events: auto;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

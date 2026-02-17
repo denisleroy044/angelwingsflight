@@ -20,10 +20,7 @@ import {
   Edit
 } from 'lucide-react'
 
-// Define a type for route paths
-type RoutePath = '/admin' | '/admin/users' | '/admin/flights' | '/admin/hotels' | '/admin/cars' | '/admin/tours' | '/admin/bookings' | '/admin/blogs' | '/admin/settings'
-
-const menuItems: Array<{ href: RoutePath; icon: any; label: string }> = [
+const menuItems = [
   { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/admin/users', icon: Users, label: 'Users' },
   { href: '/admin/flights', icon: Plane, label: 'Flights' },
@@ -53,7 +50,6 @@ export default function AdminLayout({
     }
   }, [session, status, router])
 
-  // Load sidebar state from localStorage
   useEffect(() => {
     const savedState = localStorage.getItem('adminSidebarCollapsed')
     if (savedState !== null) {
@@ -61,7 +57,6 @@ export default function AdminLayout({
     }
   }, [])
 
-  // Save sidebar state to localStorage
   const toggleSidebar = () => {
     const newState = !isCollapsed
     setIsCollapsed(newState)
@@ -134,7 +129,7 @@ export default function AdminLayout({
           </button>
         </div>
 
-        {/* User Info - Only when expanded */}
+        {/* User Info */}
         {!isCollapsed && (
           <div className="p-4 border-b border-gray-100">
             <div className="flex items-center space-x-3">
@@ -170,10 +165,9 @@ export default function AdminLayout({
                 title={isCollapsed ? item.label : ''}
                 onClick={() => setIsMobileOpen(false)}
               >
-                <Icon className={`w-5 h-5 ${isCollapsed ? '' : ''}`} />
+                <Icon className={`w-5 h-5`} />
                 {!isCollapsed && <span className="text-sm font-medium">{item.label}</span>}
                 
-                {/* Tooltip for collapsed mode */}
                 {isCollapsed && (
                   <span className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
                     {item.label}
@@ -183,7 +177,6 @@ export default function AdminLayout({
             )
           })}
 
-          {/* Logout button with modal trigger */}
           <button
             onClick={() => setShowSignoutModal(true)}
             className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors mt-8 group relative`}
