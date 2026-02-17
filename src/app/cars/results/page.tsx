@@ -22,22 +22,18 @@ function CarResultsContent() {
           <span className="text-gray-900 font-medium">Search Results</span>
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Car Rental Results</h1>
+        <h1 className="text-3xl font-bold mb-6">Car Results</h1>
         
         {location && (
           <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <p className="text-gray-700">Searching for cars in <span className="font-semibold">{location}</span></p>
+            <p>Searching for cars in <strong>{location}</strong></p>
             {pickupDate && returnDate && (
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm mt-1">
                 {new Date(pickupDate).toLocaleDateString()} - {new Date(returnDate).toLocaleDateString()}
               </p>
             )}
           </div>
         )}
-
-        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-          <p className="text-gray-500">Car rental results will appear here. This is a placeholder.</p>
-        </div>
       </div>
     </div>
   )

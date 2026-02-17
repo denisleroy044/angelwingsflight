@@ -21,20 +21,16 @@ function TourResultsContent() {
           <span className="text-gray-900 font-medium">Search Results</span>
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Tour Results</h1>
+        <h1 className="text-3xl font-bold mb-6">Tour Results</h1>
         
         {city && (
           <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <p className="text-gray-700">Searching for tours in <span className="font-semibold">{city}</span></p>
+            <p>Searching for tours in <strong>{city}</strong></p>
             {date && (
-              <p className="text-sm text-gray-600 mt-1">Date: {new Date(date).toLocaleDateString()}</p>
+              <p className="text-sm mt-1">Date: {new Date(date).toLocaleDateString()}</p>
             )}
           </div>
         )}
-
-        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-          <p className="text-gray-500">Tour results will appear here. This is a placeholder.</p>
-        </div>
       </div>
     </div>
   )

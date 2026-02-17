@@ -10,8 +10,6 @@ function FlightResultsContent() {
   const origin = searchParams.get('origin')
   const destination = searchParams.get('destination')
   const departDate = searchParams.get('departDate')
-  const returnDate = searchParams.get('returnDate')
-  const tripType = searchParams.get('tripType')
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -24,25 +22,16 @@ function FlightResultsContent() {
           <span className="text-gray-900 font-medium">Search Results</span>
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Flight Results</h1>
+        <h1 className="text-3xl font-bold mb-6">Flight Results</h1>
         
         {origin && destination && (
           <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <p className="text-gray-700">
-              Searching for flights from <span className="font-semibold">{origin}</span> to <span className="font-semibold">{destination}</span>
-            </p>
+            <p>Searching for flights from <strong>{origin}</strong> to <strong>{destination}</strong></p>
             {departDate && (
-              <p className="text-sm text-gray-600 mt-1">
-                Depart: {new Date(departDate).toLocaleDateString()}
-                {returnDate && tripType === 'round' && ` • Return: ${new Date(returnDate).toLocaleDateString()}`}
-              </p>
+              <p className="text-sm mt-1">Departing: {new Date(departDate).toLocaleDateString()}</p>
             )}
           </div>
         )}
-
-        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-          <p className="text-gray-500">Flight results will appear here. This is a placeholder.</p>
-        </div>
       </div>
     </div>
   )

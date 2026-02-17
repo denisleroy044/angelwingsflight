@@ -22,22 +22,18 @@ function HotelResultsContent() {
           <span className="text-gray-900 font-medium">Search Results</span>
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Hotel Results</h1>
+        <h1 className="text-3xl font-bold mb-6">Hotel Results</h1>
         
         {destination && (
           <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <p className="text-gray-700">Searching for hotels in <span className="font-semibold">{destination}</span></p>
+            <p>Searching for hotels in <strong>{destination}</strong></p>
             {checkIn && checkOut && (
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm mt-1">
                 {new Date(checkIn).toLocaleDateString()} - {new Date(checkOut).toLocaleDateString()}
               </p>
             )}
           </div>
         )}
-
-        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-          <p className="text-gray-500">Hotel results will appear here. This is a placeholder.</p>
-        </div>
       </div>
     </div>
   )
