@@ -26,16 +26,15 @@ export default function AccountDashboardPage() {
 
   useEffect(() => {
     const bookings = loadBookings()
-    // Get last 3 bookings
     setRecentBookings(bookings.slice(-3))
   }, [loadBookings])
 
-  // Quick Actions with enhanced styling
+  // Quick Actions with enhanced styling - using proper typed routes
   const quickActions = [
     { 
       title: 'Search Flights', 
       icon: Plane, 
-      href: '/flights',
+      href: '/flights' as const,
       gradient: 'from-blue-500 to-blue-600',
       description: 'Find the best flight deals',
       stats: 'Save up to 30%'
@@ -43,7 +42,7 @@ export default function AccountDashboardPage() {
     { 
       title: 'Find Hotels', 
       icon: Hotel, 
-      href: '/hotels',
+      href: '/hotels' as const,
       gradient: 'from-green-500 to-green-600',
       description: 'Discover amazing stays',
       stats: '2000+ properties'
@@ -51,7 +50,7 @@ export default function AccountDashboardPage() {
     { 
       title: 'Rent a Car', 
       icon: Car, 
-      href: '/cars',
+      href: '/cars' as const,
       gradient: 'from-purple-500 to-purple-600',
       description: 'Get wheels for your trip',
       stats: 'Free cancellation'
@@ -59,7 +58,7 @@ export default function AccountDashboardPage() {
     { 
       title: 'Book Tours', 
       icon: Compass, 
-      href: '/tours',
+      href: '/tours' as const,
       gradient: 'from-orange-500 to-orange-600',
       description: 'Explore local experiences',
       stats: 'Best price guarantee'
@@ -274,7 +273,7 @@ export default function AccountDashboardPage() {
                       <p className="text-2xl font-bold text-blue-600">${booking.price * (booking.quantity || 1)}</p>
                     </div>
                     <Link
-                      href={`/account/bookings/${booking.bookingId}`}
+                      href={`/account/bookings/${booking.bookingId}` as const}
                       className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium"
                     >
                       View Details
@@ -340,9 +339,12 @@ export default function AccountDashboardPage() {
                     <span className="font-medium">{item.days || item.nights} {item.days ? 'days' : 'nights'}</span>
                   </div>
                 </div>
-                <button className="w-full mt-4 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                <Link
+                  href={`/${item.type}s/${item.id}` as const}
+                  className="block w-full mt-4 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium text-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                >
                   View Details
-                </button>
+                </Link>
               </div>
             </div>
           ))}
@@ -356,9 +358,12 @@ export default function AccountDashboardPage() {
             <h3 className="text-2xl font-bold mb-2">Travel Inspiration</h3>
             <p className="text-purple-100">Discover hidden gems and unique experiences around the world</p>
           </div>
-          <button className="px-8 py-3 bg-white text-purple-600 rounded-lg hover:bg-gray-100 transition-colors font-semibold">
+          <Link
+            href="/blogs"
+            className="px-8 py-3 bg-white text-purple-600 rounded-lg hover:bg-gray-100 transition-colors font-semibold"
+          >
             Explore Blog
-          </button>
+          </Link>
         </div>
       </div>
     </div>

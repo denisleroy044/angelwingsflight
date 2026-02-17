@@ -12,13 +12,9 @@ const nextConfig = {
       },
     ],
   },
-  // Disable static generation for error pages
+  // Fix deprecation warnings
   skipTrailingSlashRedirect: true,
-  skipMiddlewareUrlNormalize: true,
-  // Ensure client-side only rendering for error pages
-  experimental: {
-    typedRoutes: true,
-  },
+  typedRoutes: true,
 }
 
 module.exports = nextConfig
