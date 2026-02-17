@@ -32,7 +32,7 @@ interface Booking {
   bookedAt?: string
 }
 
-// Define a type for route paths
+// Define a type for route paths (only for static routes)
 type RoutePath = '/flights' | '/hotels' | '/cars' | '/tours' | '/blogs' | '/account/bookings' | '/'
 
 export default function AccountDashboardPage() {
@@ -205,7 +205,7 @@ export default function AccountDashboardPage() {
         </div>
       </div>
 
-      {/* Quick Actions */}
+      {/* Quick Actions - using Link for static routes */}
       <div>
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -318,7 +318,7 @@ export default function AccountDashboardPage() {
         )}
       </div>
 
-      {/* Recommended for You */}
+      {/* Recommended for You - using anchor tags for dynamic routes */}
       <div>
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Recommended for You</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -371,12 +371,12 @@ export default function AccountDashboardPage() {
                     <span className="font-medium">{item.days || item.nights} {item.days ? 'days' : 'nights'}</span>
                   </div>
                 </div>
-                <Link
+                <a
                   href={`/${item.type}s/${item.id}`}
                   className="block w-full mt-4 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium text-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300"
                 >
                   View Details
-                </Link>
+                </a>
               </div>
             </div>
           ))}
