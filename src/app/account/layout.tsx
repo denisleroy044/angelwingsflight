@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import SignoutModal from '@/components/ui/SignoutModal'
 import { 
   LayoutDashboard, 
   Calendar, 
@@ -16,7 +17,10 @@ import {
   User
 } from 'lucide-react'
 
-const menuItems = [
+// Define a type for route paths
+type RoutePath = '/account/dashboard' | '/account/bookings' | '/account/wishlist' | '/account/payments' | '/account/settings'
+
+const menuItems: Array<{ href: RoutePath; icon: any; label: string }> = [
   { href: '/account/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/account/bookings', icon: Calendar, label: 'My Bookings' },
   { href: '/account/wishlist', icon: Heart, label: 'Wishlist' },
@@ -33,6 +37,7 @@ export default function AccountLayout({
   const router = useRouter()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [showSignoutModal, setShowSignoutModal] = useState(false)
 
   useEffect(() => {
     if (status === 'loading') return
@@ -70,6 +75,8 @@ export default function AccountLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SignoutModal isOpen={showSignoutModal} onClose={() => setShowSignoutModal(false)} />
+
       {/* Mobile overlay */}
       {isMobileOpen && (
         <div 
@@ -169,9 +176,9 @@ export default function AccountLayout({
             )
           })}
 
-          {/* Logout button */}
+          {/* Logout button with modal trigger */}
           <button
-            onClick={() => router.push('/api/auth/signout')}
+            onClick={() => setShowSignoutModal(true)}
             className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors mt-8 group relative`}
             title={isCollapsed ? 'Sign Out' : ''}
           >
@@ -190,22 +197,9 @@ export default function AccountLayout({
       <main className={`transition-all duration-300 ease-in-out min-h-screen flex flex-col
         ${isCollapsed ? 'lg:ml-20' : 'lg:ml-64'}
         ${isMobileOpen ? 'ml-64' : 'ml-0'}`}>
-        {/* Content Area */}
         <div className="flex-1 p-6 lg:p-8">
           {children}
         </div>
-        
-        {/* Footer - Automatically adjusts with sidebar */}
-        <footer className="bg-white border-t border-gray-200 py-4 px-6 lg:px-8 transition-all duration-300">
-          <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-600">
-            <p>© {new Date().getFullYear()} Angel Wings Flight Company. All rights reserved.</p>
-            <div className="flex items-center space-x-4 mt-2 md:mt-0">
-              <span>Powered by</span>
-              <span className="font-semibold text-blue-600">Angel Wings</span>
-              <span className="text-xs text-gray-400">v2.0</span>
-            </div>
-          </div>
-        </footer>
       </main>
     </div>
   )
