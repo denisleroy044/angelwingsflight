@@ -230,12 +230,7 @@ export default function FAQPage() {
                 >
                   Contact Us
                 </Link>
-                <Link
-                  href="/support"
-                  className="block w-full border border-blue-600 text-blue-600 text-center px-4 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium"
-                >
-                  Visit Support Center
-                </Link>
+                {/* Removed the /support link as it doesn't exist */}
               </div>
 
               <div className="mt-8 pt-6 border-t border-gray-100">
