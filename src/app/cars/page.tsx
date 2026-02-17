@@ -113,7 +113,7 @@ export default function CarsPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recommendedCars.slice(0, 3).map((car) => (
-              <CarCard key={car.id} car={car} featured={true} />
+              <CarCard key={car.id} car={car}  />
             ))}
           </div>
         </section>

@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 
 // Mock data - in real app, this would come from an API
-const featuredFlights = [
   {
     id: 1,
     airline: 'Pakistan International Airlines',
@@ -139,7 +138,6 @@ export default function FlightsPage() {
             </div>
           </div>
           <div className="space-y-4">
-            {featuredFlights.map((flight) => (
               <FlightCard key={flight.id} flight={flight} />
             ))}
           </div>
