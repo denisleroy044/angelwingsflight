@@ -83,12 +83,6 @@ export default function AdminDashboardPage() {
     }
   }
 
-  const renderCustomizedLabel = ({ name, percent }: { name: string; percent?: number }) => {
-    // Handle case when percent is undefined
-    const percentage = percent ? (percent * 100).toFixed(0) : '0';
-    return `${name} ${percentage}%`;
-  };
-
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -188,7 +182,12 @@ export default function AdminDashboardPage() {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={renderCustomizedLabel}
+                label={({ name, percent }) => {
+                  // Safe handling with default values
+                  const safeName = name || 'Unknown';
+                  const safePercent = percent || 0;
+                  return `${safeName} ${(safePercent * 100).toFixed(0)}%`;
+                }}
                 outerRadius={100}
                 fill="#8884d8"
                 dataKey="value"
