@@ -303,12 +303,12 @@ export default function AccountDashboardPage() {
                       <p className="text-2xl font-bold text-blue-600">${booking.price * (booking.quantity || 1)}</p>
                     </div>
                     {booking.bookingId && (
-                      <Link
-                        href={`/account/bookings/${booking.bookingId}` as const}
+                      <a
+                        href={`/account/bookings/${booking.bookingId}`}
                         className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium"
                       >
                         View Details
-                      </Link>
+                      </a>
                     )}
                   </div>
                 </div>
