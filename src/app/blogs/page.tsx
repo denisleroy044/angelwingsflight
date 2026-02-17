@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import BlogCard from '@/components/blogs/BlogCard'
 
-// Mock data - in real app, this would come from an API
+// Mock data
 const blogs = [
   {
     id: 1,
@@ -63,21 +63,13 @@ const blogs = [
     readTime: '8 min read',
     image: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=800',
     category: 'Travel Tips'
-  },
-  {
-    id: 7,
-    title: 'Trapizzino: Rome\'s OG Street Food',
-    excerpt: 'Everything you need to know about Trapizzino, Rome\'s iconic street food. Where to find the best ones and what to order.',
-    author: 'Luca Moretti',
-    date: '1 Feb 2026',
-    readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800',
-    category: 'Street Food'
   }
 ]
 
 export default function BlogsPage() {
+  // Take first 4 for new blogs
   const newBlogs = blogs.slice(0, 4)
+  // Take remaining for other blogs
   const otherBlogs = blogs.slice(4)
 
   return (
@@ -92,16 +84,16 @@ export default function BlogsPage() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Capital Trust Travel Agency Blogs</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Travel Blog</h1>
           <p className="text-lg text-gray-600">Travel tips, guides, and stories from around the world</p>
         </div>
 
         {/* New Blogs Section */}
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">New Blogs</h2>
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {newBlogs.map((blog) => (
-              <BlogCard key={blog.id} blog={blog} featured={true} />
+              <BlogCard key={blog.id} blog={blog} />
             ))}
           </div>
         </section>
@@ -109,7 +101,7 @@ export default function BlogsPage() {
         {/* Other Blogs Section */}
         <section>
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Other Blogs</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherBlogs.map((blog) => (
               <BlogCard key={blog.id} blog={blog} />
             ))}
