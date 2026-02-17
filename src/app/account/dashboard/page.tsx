@@ -19,13 +19,26 @@ import {
 } from 'lucide-react'
 import { useCartStore } from '@/store/cartStore'
 
+// Define a type for the booking
+interface Booking {
+  id: string
+  bookingId?: string
+  name: string
+  type: string
+  price: number
+  quantity?: number
+  status?: string
+  date?: string
+  bookedAt?: string
+}
+
 export default function AccountDashboardPage() {
   const { data: session } = useSession()
-  const [recentBookings, setRecentBookings] = useState<any[]>([])
+  const [recentBookings, setRecentBookings] = useState<Booking[]>([])
   const { loadBookings } = useCartStore()
 
   useEffect(() => {
-    const bookings = loadBookings()
+    const bookings = loadBookings() as Booking[]
     setRecentBookings(bookings.slice(-3))
   }, [loadBookings])
 
@@ -117,7 +130,7 @@ export default function AccountDashboardPage() {
     }
   ]
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string = 'pending') => {
     switch(status) {
       case 'confirmed': return 'bg-green-100 text-green-800'
       case 'pending': return 'bg-yellow-100 text-yellow-800'
@@ -127,7 +140,7 @@ export default function AccountDashboardPage() {
     }
   }
 
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status: string = 'pending') => {
     switch(status) {
       case 'confirmed': return '✓'
       case 'pending': return '⏳'
@@ -253,11 +266,11 @@ export default function AccountDashboardPage() {
                       <div className="flex items-center space-x-4 mt-1">
                         <p className="text-sm text-gray-600 flex items-center">
                           <Calendar className="w-4 h-4 mr-1" />
-                          {booking.date || new Date(booking.bookedAt || Date.now()).toLocaleDateString('en-US', {
+                          {booking.date || (booking.bookedAt ? new Date(booking.bookedAt).toLocaleDateString('en-US', {
                             month: 'short',
                             day: 'numeric',
                             year: 'numeric'
-                          })}
+                          }) : 'Date not set')}
                         </p>
                         <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.status)}`}>
                           <span className="mr-1">{getStatusIcon(booking.status)}</span>
@@ -273,7 +286,7 @@ export default function AccountDashboardPage() {
                     </div>
                     {booking.bookingId && (
                       <Link
-                        href={`/account/bookings/${booking.bookingId}`}
+                        href={`/account/bookings/${booking.bookingId}` as const}
                         className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium"
                       >
                         View Details
