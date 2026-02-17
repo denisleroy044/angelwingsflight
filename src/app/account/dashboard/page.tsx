@@ -27,6 +27,38 @@ interface Booking {
   bookedAt?: string
 }
 
+// Define the quick actions with properly typed hrefs
+const quickActions = [
+  { 
+    title: 'Search Flights', 
+    icon: Plane, 
+    href: '/flights' as const,
+    gradient: 'from-blue-500 to-blue-600',
+    stats: 'Save up to 30%'
+  },
+  { 
+    title: 'Find Hotels', 
+    icon: Hotel, 
+    href: '/hotels' as const,
+    gradient: 'from-green-500 to-green-600',
+    stats: '2000+ properties'
+  },
+  { 
+    title: 'Rent a Car', 
+    icon: Car, 
+    href: '/cars' as const,
+    gradient: 'from-purple-500 to-purple-600',
+    stats: 'Free cancellation'
+  },
+  { 
+    title: 'Book Tours', 
+    icon: Compass, 
+    href: '/tours' as const,
+    gradient: 'from-orange-500 to-orange-600',
+    stats: 'Best price guarantee'
+  }
+]
+
 export default function AccountDashboardPage() {
   const { data: session } = useSession()
   const [recentBookings, setRecentBookings] = useState<Booking[]>([])
@@ -36,36 +68,6 @@ export default function AccountDashboardPage() {
     const bookings = loadBookings() as Booking[]
     setRecentBookings(bookings.slice(-3))
   }, [loadBookings])
-
-  const quickActions = [
-    { title: 'Search Flights', icon: Plane, href: '/flights', gradient: 'from-blue-500 to-blue-600', stats: 'Save up to 30%' },
-    { title: 'Find Hotels', icon: Hotel, href: '/hotels', gradient: 'from-green-500 to-green-600', stats: '2000+ properties' },
-    { title: 'Rent a Car', icon: Car, href: '/cars', gradient: 'from-purple-500 to-purple-600', stats: 'Free cancellation' },
-    { title: 'Book Tours', icon: Compass, href: '/tours', gradient: 'from-orange-500 to-orange-600', stats: 'Best price guarantee' }
-  ]
-
-  const recommendedItems = [
-    {
-      id: 1,
-      name: 'Dubai Luxury Package',
-      type: 'tour',
-      location: 'Dubai, UAE',
-      price: 599,
-      image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800',
-      rating: 4.8,
-      days: 5
-    },
-    {
-      id: 2,
-      name: 'Paris Getaway',
-      type: 'hotel',
-      location: 'Paris, France',
-      price: 799,
-      image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
-      rating: 4.7,
-      nights: 4
-    }
-  ]
 
   const getStatusColor = (status?: string) => {
     switch(status) {
@@ -115,12 +117,16 @@ export default function AccountDashboardPage() {
           {quickActions.map((action) => {
             const Icon = action.icon
             return (
-              <Link key={action.title} href={action.href} className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <Link 
+                key={action.title} 
+                href={action.href} 
+                className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
                 <div className={`absolute inset-0 bg-gradient-to-br ${action.gradient} opacity-90 group-hover:opacity-100 transition-opacity`} />
                 <div className="relative p-6 text-white">
                   <Icon className="w-8 h-8 mb-4" />
                   <h3 className="font-semibold text-lg mb-1">{action.title}</h3>
-                  <p className="text-sm text-white/80 mb-4">{action.stats}</p>
+                  <p className="text-sm text-white/80">{action.stats}</p>
                 </div>
               </Link>
             )
