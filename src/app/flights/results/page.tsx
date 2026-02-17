@@ -5,12 +5,9 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 
-function FlightResultsContent() {
+function FlightsResultsContent() {
   const searchParams = useSearchParams()
-  const origin = searchParams.get('origin')
-  const destination = searchParams.get('destination')
-  const departDate = searchParams.get('departDate')
-
+  
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4">
@@ -21,30 +18,20 @@ function FlightResultsContent() {
           <ChevronRight className="w-4 h-4" />
           <span className="text-gray-900 font-medium">Search Results</span>
         </div>
-
-        <h1 className="text-3xl font-bold mb-6">Flight Results</h1>
-        
-        {origin && destination && (
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <p>Searching for flights from <strong>{origin}</strong> to <strong>{destination}</strong></p>
-            {departDate && (
-              <p className="text-sm mt-1">Departing: {new Date(departDate).toLocaleDateString()}</p>
-            )}
-          </div>
-        )}
+        <h1 className="text-3xl font-bold mb-6">Flights Results</h1>
       </div>
     </div>
   )
 }
 
-export default function FlightResultsPage() {
+export default function FlightsResultsPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
       </div>
     }>
-      <FlightResultsContent />
+      <FlightsResultsContent />
     </Suspense>
   )
 }

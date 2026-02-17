@@ -5,12 +5,9 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 
-function HotelResultsContent() {
+function HotelsResultsContent() {
   const searchParams = useSearchParams()
-  const destination = searchParams.get('destination')
-  const checkIn = searchParams.get('checkIn')
-  const checkOut = searchParams.get('checkOut')
-
+  
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4">
@@ -21,32 +18,20 @@ function HotelResultsContent() {
           <ChevronRight className="w-4 h-4" />
           <span className="text-gray-900 font-medium">Search Results</span>
         </div>
-
-        <h1 className="text-3xl font-bold mb-6">Hotel Results</h1>
-        
-        {destination && (
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <p>Searching for hotels in <strong>{destination}</strong></p>
-            {checkIn && checkOut && (
-              <p className="text-sm mt-1">
-                {new Date(checkIn).toLocaleDateString()} - {new Date(checkOut).toLocaleDateString()}
-              </p>
-            )}
-          </div>
-        )}
+        <h1 className="text-3xl font-bold mb-6">Hotels Results</h1>
       </div>
     </div>
   )
 }
 
-export default function HotelResultsPage() {
+export default function HotelsResultsPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
       </div>
     }>
-      <HotelResultsContent />
+      <HotelsResultsContent />
     </Suspense>
   )
 }
