@@ -35,6 +35,11 @@ interface Booking {
 // Define a type for route paths
 type RoutePath = '/flights' | '/hotels' | '/cars' | '/tours' | '/blogs' | '/account/bookings' | '/'
 
+// Helper function to create booking detail URL
+const getBookingDetailUrl = (bookingId: string): string => {
+  return `/account/bookings/${bookingId}`
+}
+
 export default function AccountDashboardPage() {
   const { data: session } = useSession()
   const [recentBookings, setRecentBookings] = useState<Booking[]>([])
@@ -304,7 +309,7 @@ export default function AccountDashboardPage() {
                     </div>
                     {booking.bookingId && (
                       <Link
-                        href={`/account/bookings/${booking.bookingId}` as const}
+                        href={getBookingDetailUrl(booking.bookingId)}
                         className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium"
                       >
                         View Details
