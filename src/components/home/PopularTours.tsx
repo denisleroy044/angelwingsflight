@@ -106,7 +106,7 @@ export default function PopularTours() {
               <p className="text-blue-100">Find price drops and travel as far as you can with our exclusive deals.</p>
             </div>
             <Link 
-              href="/deals" 
+              href="/tours" 
               className="mt-4 md:mt-0 bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
             >
               View Deals
