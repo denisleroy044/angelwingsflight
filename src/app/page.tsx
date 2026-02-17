@@ -19,28 +19,28 @@ export default function HomePage() {
   
   // Hotel search state
   const [hotelCity, setHotelCity] = useState('')
-  const [checkIn, setCheckIn] = useState(new Date())
-  const [checkOut, setCheckOut] = useState(new Date(Date.now() + 86400000))
+  const [checkIn, setCheckIn] = useState<Date | null>(new Date())
+  const [checkOut, setCheckOut] = useState<Date | null>(new Date(Date.now() + 86400000))
   const [hotelGuests, setHotelGuests] = useState(2)
   const [hotelRooms, setHotelRooms] = useState(1)
 
   // Car search state
   const [pickupLocation, setPickupLocation] = useState('')
-  const [pickupDate, setPickupDate] = useState(new Date())
-  const [returnDate, setReturnDate] = useState(new Date(Date.now() + 86400000 * 3))
+  const [pickupDate, setPickupDate] = useState<Date | null>(new Date())
+  const [returnDate, setReturnDate] = useState<Date | null>(new Date(Date.now() + 86400000 * 3))
   const [carTravellers, setCarTravellers] = useState(1)
 
   // Flight search state
   const [flightFrom, setFlightFrom] = useState('')
   const [flightTo, setFlightTo] = useState('')
-  const [departDate, setDepartDate] = useState(new Date())
-  const [returnFlightDate, setReturnFlightDate] = useState(new Date(Date.now() + 86400000 * 7))
+  const [departDate, setDepartDate] = useState<Date | null>(new Date())
+  const [returnFlightDate, setReturnFlightDate] = useState<Date | null>(new Date(Date.now() + 86400000 * 7))
   const [flightTravellers, setFlightTravellers] = useState(1)
   const [tripType, setTripType] = useState('round')
 
   // Tour search state
   const [tourCity, setTourCity] = useState('')
-  const [tourDate, setTourDate] = useState(new Date())
+  const [tourDate, setTourDate] = useState<Date | null>(new Date())
   const [tourTravellers, setTourTravellers] = useState(1)
 
   const handleSearch = (e: React.FormEvent) => {
@@ -48,16 +48,16 @@ export default function HomePage() {
     
     switch(activeTab) {
       case 'hotels':
-        router.push(`/hotels/results?city=${encodeURIComponent(hotelCity)}&checkIn=${checkIn.toISOString()}&checkOut=${checkOut.toISOString()}&guests=${hotelGuests}&rooms=${hotelRooms}`)
+        router.push(`/hotels/results?city=${encodeURIComponent(hotelCity)}&checkIn=${checkIn?.toISOString()}&checkOut=${checkOut?.toISOString()}&guests=${hotelGuests}&rooms=${hotelRooms}`)
         break
       case 'cars':
-        router.push(`/cars/results?location=${encodeURIComponent(pickupLocation)}&pickup=${pickupDate.toISOString()}&return=${returnDate.toISOString()}&travellers=${carTravellers}`)
+        router.push(`/cars/results?location=${encodeURIComponent(pickupLocation)}&pickup=${pickupDate?.toISOString()}&return=${returnDate?.toISOString()}&travellers=${carTravellers}`)
         break
       case 'flights':
-        router.push(`/flights/results?from=${encodeURIComponent(flightFrom)}&to=${encodeURIComponent(flightTo)}&depart=${departDate.toISOString()}&return=${returnFlightDate.toISOString()}&travellers=${flightTravellers}&tripType=${tripType}`)
+        router.push(`/flights/results?from=${encodeURIComponent(flightFrom)}&to=${encodeURIComponent(flightTo)}&depart=${departDate?.toISOString()}&return=${returnFlightDate?.toISOString()}&travellers=${flightTravellers}&tripType=${tripType}`)
         break
       case 'tours':
-        router.push(`/tours/results?city=${encodeURIComponent(tourCity)}&date=${tourDate.toISOString()}&travellers=${tourTravellers}`)
+        router.push(`/tours/results?city=${encodeURIComponent(tourCity)}&date=${tourDate?.toISOString()}&travellers=${tourTravellers}`)
         break
     }
   }
@@ -131,7 +131,7 @@ export default function HomePage() {
                     </label>
                     <DatePicker
                       selected={checkIn}
-                      onChange={(date) => setCheckIn(date!)}
+                      onChange={(date: Date | null) => setCheckIn(date)}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       dateFormat="dd-MM-yyyy"
                       minDate={new Date()}
@@ -144,10 +144,10 @@ export default function HomePage() {
                     </label>
                     <DatePicker
                       selected={checkOut}
-                      onChange={(date) => setCheckOut(date!)}
+                      onChange={(date: Date | null) => setCheckOut(date)}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       dateFormat="dd-MM-yyyy"
-                      minDate={checkIn}
+                      minDate={checkIn || new Date()}
                     />
                   </div>
                   <div className="space-y-2">
@@ -208,7 +208,7 @@ export default function HomePage() {
                     </label>
                     <DatePicker
                       selected={pickupDate}
-                      onChange={(date) => setPickupDate(date!)}
+                      onChange={(date: Date | null) => setPickupDate(date)}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       dateFormat="dd-MM-yyyy"
                       minDate={new Date()}
@@ -221,10 +221,10 @@ export default function HomePage() {
                     </label>
                     <DatePicker
                       selected={returnDate}
-                      onChange={(date) => setReturnDate(date!)}
+                      onChange={(date: Date | null) => setReturnDate(date)}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       dateFormat="dd-MM-yyyy"
-                      minDate={pickupDate}
+                      minDate={pickupDate || new Date()}
                     />
                   </div>
                   <div className="space-y-2">
@@ -306,7 +306,7 @@ export default function HomePage() {
                       </label>
                       <DatePicker
                         selected={departDate}
-                        onChange={(date) => setDepartDate(date!)}
+                        onChange={(date: Date | null) => setDepartDate(date)}
                         className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         dateFormat="dd-MM-yyyy"
                         minDate={new Date()}
@@ -320,10 +320,10 @@ export default function HomePage() {
                         </label>
                         <DatePicker
                           selected={returnFlightDate}
-                          onChange={(date) => setReturnFlightDate(date!)}
+                          onChange={(date: Date | null) => setReturnFlightDate(date)}
                           className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           dateFormat="dd-MM-yyyy"
-                          minDate={departDate}
+                          minDate={departDate || new Date()}
                         />
                       </div>
                     )}
@@ -370,7 +370,7 @@ export default function HomePage() {
                     </label>
                     <DatePicker
                       selected={tourDate}
-                      onChange={(date) => setTourDate(date!)}
+                      onChange={(date: Date | null) => setTourDate(date)}
                       className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       dateFormat="dd-MM-yyyy"
                       minDate={new Date()}
@@ -415,90 +415,6 @@ export default function HomePage() {
                 </div>
               )}
             </form>
-          </div>
-        </div>
-      </section>
-
-      {/* Popular Destinations */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Popular Destinations</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {['Dubai', 'Paris', 'Tokyo', 'New York', 'London', 'Rome', 'Sydney', 'Bangkok'].map((city) => (
-              <Link
-                key={city}
-                href={`/hotels/results?city=${city}`}
-                className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition"
-              >
-                <div className="h-40 bg-gradient-to-br from-blue-500 to-blue-600"></div>
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <h3 className="text-xl font-bold">{city}</h3>
-                  <p className="text-sm">From $499</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Hotels */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold">Featured Hotels</h2>
-            <Link href="/hotels" className="text-blue-600 hover:text-blue-700 font-semibold">View All →</Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                <div className="h-48 bg-gray-300"></div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-1">Luxury Hotel {i}</h3>
-                  <p className="text-gray-600 text-sm mb-2">Dubai, UAE</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-blue-600 font-bold">$199/night</span>
-                    <Link href={`/hotels/${i}`} className="text-blue-600 text-sm font-medium">Book Now →</Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-12">Why Choose Angel Wings?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Best Price Guarantee</h3>
-              <p className="text-blue-100">Find a lower price? We'll match it.</p>
-            </div>
-            <div>
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">24/7 Customer Support</h3>
-              <p className="text-blue-100">We're here to help anytime.</p>
-            </div>
-            <div>
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Secure Payments</h3>
-              <p className="text-blue-100">Your data is always protected.</p>
-            </div>
           </div>
         </div>
       </section>
