@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Calendar, Users, MapPin, Home, Car, Plane, Compass, Search } from 'lucide-react'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+import DatePickerField from '@/components/ui/DatePickerField'
 import Link from 'next/link'
 
 const tabs = [
@@ -101,40 +100,21 @@ export default function HeroSearch() {
                     <MapPin className="w-4 h-4 text-blue-600" />
                     <span>Search By City</span>
                   </label>
-                  <input
-                    type="text"
-                    placeholder="Where are you going?"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    value={hotelCity}
-                    onChange={(e) => setHotelCity(e.target.value)}
-                    required
-                  />
+                  <input type="text" placeholder="Where are you going?" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={hotelCity} onChange={(e) => setHotelCity(e.target.value)} required />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
                     <Calendar className="w-4 h-4 text-blue-600" />
                     <span>Check-in</span>
                   </label>
-                  <DatePicker
-                    selected={checkIn}
-                    onChange={(date: Date | null) => setCheckIn(date)}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    dateFormat="dd-MM-yyyy"
-                    minDate={new Date()}
-                  />
+                  <DatePickerField selected={checkIn} onChange={setCheckIn} minDate={new Date()} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
                     <Calendar className="w-4 h-4 text-blue-600" />
                     <span>Check-out</span>
                   </label>
-                  <DatePicker
-                    selected={checkOut}
-                    onChange={(date: Date | null) => setCheckOut(date)}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    dateFormat="dd-MM-yyyy"
-                    minDate={checkIn || new Date()}
-                  />
+                  <DatePickerField selected={checkOut} onChange={setCheckOut} minDate={checkIn || new Date()} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
@@ -170,32 +150,8 @@ export default function HeroSearch() {
                     <option value="LHR">London Heathrow</option>
                   </select>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                    <Calendar className="w-4 h-4 text-blue-600" />
-                    <span>Pickup Date</span>
-                  </label>
-                  <DatePicker
-                    selected={pickupDate}
-                    onChange={(date: Date | null) => setPickupDate(date)}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    dateFormat="dd-MM-yyyy"
-                    minDate={new Date()}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                    <Calendar className="w-4 h-4 text-blue-600" />
-                    <span>Return Date</span>
-                  </label>
-                  <DatePicker
-                    selected={returnDate}
-                    onChange={(date: Date | null) => setReturnDate(date)}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    dateFormat="dd-MM-yyyy"
-                    minDate={pickupDate || new Date()}
-                  />
-                </div>
+                <DatePickerField selected={pickupDate} onChange={setPickupDate} placeholderText="Pickup Date" minDate={new Date()} />
+                <DatePickerField selected={returnDate} onChange={setReturnDate} placeholderText="Return Date" minDate={pickupDate || new Date()} />
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
                     <Users className="w-4 h-4 text-blue-600" />
@@ -222,47 +178,11 @@ export default function HeroSearch() {
                   </label>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                      <MapPin className="w-4 h-4 text-blue-600" />
-                      <span>From</span>
-                    </label>
-                    <input type="text" placeholder="Departure city" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={flightFrom} onChange={(e) => setFlightFrom(e.target.value)} required />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                      <MapPin className="w-4 h-4 text-blue-600" />
-                      <span>To</span>
-                    </label>
-                    <input type="text" placeholder="Destination city" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={flightTo} onChange={(e) => setFlightTo(e.target.value)} required />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                      <Calendar className="w-4 h-4 text-blue-600" />
-                      <span>Depart</span>
-                    </label>
-                    <DatePicker
-                      selected={departDate}
-                      onChange={(date: Date | null) => setDepartDate(date)}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      dateFormat="dd-MM-yyyy"
-                      minDate={new Date()}
-                    />
-                  </div>
+                  <input type="text" placeholder="From" className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500" value={flightFrom} onChange={(e) => setFlightFrom(e.target.value)} required />
+                  <input type="text" placeholder="To" className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500" value={flightTo} onChange={(e) => setFlightTo(e.target.value)} required />
+                  <DatePickerField selected={departDate} onChange={setDepartDate} placeholderText="Depart" minDate={new Date()} />
                   {tripType === 'round' && (
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                        <Calendar className="w-4 h-4 text-blue-600" />
-                        <span>Return</span>
-                      </label>
-                      <DatePicker
-                        selected={returnFlightDate}
-                        onChange={(date: Date | null) => setReturnFlightDate(date)}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        dateFormat="dd-MM-yyyy"
-                        minDate={departDate || new Date()}
-                      />
-                    </div>
+                    <DatePickerField selected={returnFlightDate} onChange={setReturnFlightDate} placeholderText="Return" minDate={departDate || new Date()} />
                   )}
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
@@ -280,41 +200,15 @@ export default function HeroSearch() {
             {/* TOURS FORM */}
             {activeTab === 'tours' && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                    <MapPin className="w-4 h-4 text-blue-600" />
-                    <span>Destination</span>
-                  </label>
-                  <input type="text" placeholder="Where to?" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={tourCity} onChange={(e) => setTourCity(e.target.value)} required />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                    <Calendar className="w-4 h-4 text-blue-600" />
-                    <span>Tour Date</span>
-                  </label>
-                  <DatePicker
-                    selected={tourDate}
-                    onChange={(date: Date | null) => setTourDate(date)}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    dateFormat="dd-MM-yyyy"
-                    minDate={new Date()}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
-                    <Users className="w-4 h-4 text-blue-600" />
-                    <span>Travellers</span>
-                  </label>
-                  <select className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={tourTravellers} onChange={(e) => setTourTravellers(Number(e.target.value))}>
-                    {[1,2,3,4,5,6,7,8].map(num => <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>)}
-                  </select>
-                </div>
-                <div className="flex items-end">
-                  <button type="submit" className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all font-semibold flex items-center justify-center space-x-2">
-                    <Search className="w-5 h-5" />
-                    <span>Search Tours</span>
-                  </button>
-                </div>
+                <input type="text" placeholder="Destination" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={tourCity} onChange={(e) => setTourCity(e.target.value)} required />
+                <DatePickerField selected={tourDate} onChange={setTourDate} placeholderText="Tour Date" minDate={new Date()} />
+                <select className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={tourTravellers} onChange={(e) => setTourTravellers(Number(e.target.value))}>
+                  {[1,2,3,4,5,6,7,8].map(num => <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>)}
+                </select>
+                <button type="submit" className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all font-semibold flex items-center justify-center space-x-2">
+                  <Search className="w-5 h-5" />
+                  <span>Search Tours</span>
+                </button>
               </div>
             )}
 
