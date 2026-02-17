@@ -64,20 +64,13 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section with Search */}
       <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
         <div className="container mx-auto px-4 py-16">
-          {/* Hero Content */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              Your Trip Starts Here!
-            </h1>
-            <p className="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto">
-              Let us help you plan your next journey — the one that will leave a lifetime of memories.
-            </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Your Trip Starts Here!</h1>
+            <p className="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto">Let us help you plan your next journey — the one that will leave a lifetime of memories.</p>
           </div>
 
-          {/* Search Tabs */}
           <div className="bg-white/10 backdrop-blur-lg rounded-t-xl p-1 inline-flex flex-wrap">
             {tabs.map((tab) => {
               const Icon = tab.icon
@@ -86,9 +79,7 @@ export default function HomePage() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all ${
-                    activeTab === tab.id
-                      ? 'bg-white text-blue-900 shadow-lg'
-                      : 'text-white hover:bg-white/20'
+                    activeTab === tab.id ? 'bg-white text-blue-900 shadow-lg' : 'text-white hover:bg-white/20'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -96,15 +87,11 @@ export default function HomePage() {
                 </button>
               )
             })}
-            <Link 
-              href="/more-services" 
-              className="flex items-center space-x-2 px-6 py-3 text-white hover:bg-white/20 rounded-lg font-medium transition-all"
-            >
+            <Link href="/more-services" className="flex items-center space-x-2 px-6 py-3 text-white hover:bg-white/20 rounded-lg font-medium transition-all">
               <span>MORE SERVICES</span>
             </Link>
           </div>
 
-          {/* Dynamic Search Form */}
           <div className="bg-white rounded-b-xl rounded-tr-xl p-6 md:p-8 shadow-2xl">
             <form onSubmit={handleSearch}>
               {/* HOTELS FORM */}
@@ -156,23 +143,11 @@ export default function HomePage() {
                       <span>Travellers & Rooms</span>
                     </label>
                     <div className="flex space-x-2">
-                      <select 
-                        className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        value={hotelGuests}
-                        onChange={(e) => setHotelGuests(Number(e.target.value))}
-                      >
-                        {[1,2,3,4,5,6].map(num => (
-                          <option key={num} value={num}>{num} Guest{num > 1 ? 's' : ''}</option>
-                        ))}
+                      <select className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={hotelGuests} onChange={(e) => setHotelGuests(Number(e.target.value))}>
+                        {[1,2,3,4,5,6].map(num => <option key={num} value={num}>{num} Guest{num > 1 ? 's' : ''}</option>)}
                       </select>
-                      <select 
-                        className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        value={hotelRooms}
-                        onChange={(e) => setHotelRooms(Number(e.target.value))}
-                      >
-                        {[1,2,3,4,5].map(num => (
-                          <option key={num} value={num}>{num} Room{num > 1 ? 's' : ''}</option>
-                        ))}
+                      <select className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={hotelRooms} onChange={(e) => setHotelRooms(Number(e.target.value))}>
+                        {[1,2,3,4,5].map(num => <option key={num} value={num}>{num} Room{num > 1 ? 's' : ''}</option>)}
                       </select>
                     </div>
                   </div>
@@ -187,12 +162,7 @@ export default function HomePage() {
                       <MapPin className="w-4 h-4 text-blue-600" />
                       <span>Pickup Location</span>
                     </label>
-                    <select
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      value={pickupLocation}
-                      onChange={(e) => setPickupLocation(e.target.value)}
-                      required
-                    >
+                    <select className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={pickupLocation} onChange={(e) => setPickupLocation(e.target.value)} required>
                       <option value="">Select location</option>
                       <option value="DXB">Dubai Airport (DXB)</option>
                       <option value="AUH">Abu Dhabi Airport (AUH)</option>
@@ -232,14 +202,8 @@ export default function HomePage() {
                       <Users className="w-4 h-4 text-blue-600" />
                       <span>Travellers</span>
                     </label>
-                    <select
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      value={carTravellers}
-                      onChange={(e) => setCarTravellers(Number(e.target.value))}
-                    >
-                      {[1,2,3,4,5,6,7,8].map(num => (
-                        <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>
-                      ))}
+                    <select className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={carTravellers} onChange={(e) => setCarTravellers(Number(e.target.value))}>
+                      {[1,2,3,4,5,6,7,8].map(num => <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>)}
                     </select>
                   </div>
                 </div>
@@ -250,23 +214,11 @@ export default function HomePage() {
                 <div className="space-y-4">
                   <div className="flex space-x-4 mb-4">
                     <label className="flex items-center space-x-2">
-                      <input 
-                        type="radio" 
-                        value="round" 
-                        checked={tripType === 'round'}
-                        onChange={(e) => setTripType(e.target.value)}
-                        className="w-4 h-4 text-blue-600"
-                      />
+                      <input type="radio" value="round" checked={tripType === 'round'} onChange={(e) => setTripType(e.target.value)} className="w-4 h-4 text-blue-600" />
                       <span className="text-gray-700">Round Trip</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input 
-                        type="radio" 
-                        value="oneway" 
-                        checked={tripType === 'oneway'}
-                        onChange={(e) => setTripType(e.target.value)}
-                        className="w-4 h-4 text-blue-600"
-                      />
+                      <input type="radio" value="oneway" checked={tripType === 'oneway'} onChange={(e) => setTripType(e.target.value)} className="w-4 h-4 text-blue-600" />
                       <span className="text-gray-700">One Way</span>
                     </label>
                   </div>
@@ -276,28 +228,14 @@ export default function HomePage() {
                         <MapPin className="w-4 h-4 text-blue-600" />
                         <span>From</span>
                       </label>
-                      <input
-                        type="text"
-                        placeholder="Departure city"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        value={flightFrom}
-                        onChange={(e) => setFlightFrom(e.target.value)}
-                        required
-                      />
+                      <input type="text" placeholder="Departure city" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={flightFrom} onChange={(e) => setFlightFrom(e.target.value)} required />
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
                         <MapPin className="w-4 h-4 text-blue-600" />
                         <span>To</span>
                       </label>
-                      <input
-                        type="text"
-                        placeholder="Destination city"
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        value={flightTo}
-                        onChange={(e) => setFlightTo(e.target.value)}
-                        required
-                      />
+                      <input type="text" placeholder="Destination city" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={flightTo} onChange={(e) => setFlightTo(e.target.value)} required />
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
@@ -332,14 +270,8 @@ export default function HomePage() {
                         <Users className="w-4 h-4 text-blue-600" />
                         <span>Travellers</span>
                       </label>
-                      <select
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        value={flightTravellers}
-                        onChange={(e) => setFlightTravellers(Number(e.target.value))}
-                      >
-                        {[1,2,3,4,5,6,7,8,9].map(num => (
-                          <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>
-                        ))}
+                      <select className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={flightTravellers} onChange={(e) => setFlightTravellers(Number(e.target.value))}>
+                        {[1,2,3,4,5,6,7,8,9].map(num => <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>)}
                       </select>
                     </div>
                   </div>
@@ -354,14 +286,7 @@ export default function HomePage() {
                       <MapPin className="w-4 h-4 text-blue-600" />
                       <span>Destination</span>
                     </label>
-                    <input
-                      type="text"
-                      placeholder="Where to?"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      value={tourCity}
-                      onChange={(e) => setTourCity(e.target.value)}
-                      required
-                    />
+                    <input type="text" placeholder="Where to?" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={tourCity} onChange={(e) => setTourCity(e.target.value)} required />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
@@ -381,21 +306,12 @@ export default function HomePage() {
                       <Users className="w-4 h-4 text-blue-600" />
                       <span>Travellers</span>
                     </label>
-                    <select
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      value={tourTravellers}
-                      onChange={(e) => setTourTravellers(Number(e.target.value))}
-                    >
-                      {[1,2,3,4,5,6,7,8].map(num => (
-                        <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>
-                      ))}
+                    <select className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" value={tourTravellers} onChange={(e) => setTourTravellers(Number(e.target.value))}>
+                      {[1,2,3,4,5,6,7,8].map(num => <option key={num} value={num}>{num} Traveller{num > 1 ? 's' : ''}</option>)}
                     </select>
                   </div>
                   <div className="flex items-end">
-                    <button
-                      type="submit"
-                      className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all font-semibold flex items-center justify-center space-x-2"
-                    >
+                    <button type="submit" className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all font-semibold flex items-center justify-center space-x-2">
                       <Search className="w-5 h-5" />
                       <span>Search Tours</span>
                     </button>
@@ -403,13 +319,9 @@ export default function HomePage() {
                 </div>
               )}
 
-              {/* Submit Button for other tabs */}
               {activeTab !== 'tours' && (
                 <div className="mt-6 flex justify-center">
-                  <button
-                    type="submit"
-                    className="bg-blue-600 text-white px-12 py-4 rounded-lg hover:bg-blue-700 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
-                  >
+                  <button type="submit" className="bg-blue-600 text-white px-12 py-4 rounded-lg hover:bg-blue-700 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl">
                     Search {activeTab}
                   </button>
                 </div>

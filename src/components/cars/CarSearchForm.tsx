@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { useTranslations } from 'next-intl'
 
 interface FormData {
   pickupLocation: string;
@@ -12,7 +11,6 @@ interface FormData {
 
 export default function CarSearchForm() {
   const router = useRouter()
-  const t = useTranslations("Cars")
   const [pickupDate, setPickupDate] = useState<Date | null>(new Date())
   const [returnDate, setReturnDate] = useState<Date | null>(new Date(Date.now() + 86400000))
   const { register, handleSubmit } = useForm<FormData>()
@@ -30,13 +28,13 @@ export default function CarSearchForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-4 gap-4">
       <input
         {...register("pickupLocation", { required: true })}
-        placeholder={t("pickupLocation")}
+        placeholder="Pickup Location"
         className="w-full p-3 border rounded"
       />
       <DatePicker
         selected={pickupDate}
         onChange={(date: Date | null) => setPickupDate(date)}
-        placeholderText={t("pickupDate")}
+        placeholderText="Pickup Date"
         className="w-full p-3 border rounded"
         minDate={new Date()}
         dateFormat="dd-MM-yyyy"
@@ -44,13 +42,13 @@ export default function CarSearchForm() {
       <DatePicker
         selected={returnDate}
         onChange={(date: Date | null) => setReturnDate(date)}
-        placeholderText={t("returnDate")}
+        placeholderText="Return Date"
         className="w-full p-3 border rounded"
         minDate={pickupDate || new Date()}
         dateFormat="dd-MM-yyyy"
       />
       <button type="submit" className="bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
-        {t("search")}
+        Search Cars
       </button>
     </form>
   )
