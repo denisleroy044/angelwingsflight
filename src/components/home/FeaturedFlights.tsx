@@ -1,3 +1,4 @@
+'use client'
 import { Plane, Clock, Users } from 'lucide-react'
 import Link from 'next/link'
 
@@ -79,25 +80,20 @@ export default function FeaturedFlights() {
     <section className="py-16 bg-white">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="section-title">Featured Flights</h2>
-          <p className="section-subtitle">These alluring destinations are picked just for you.</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Flights</h2>
+          <p className="text-gray-600">These alluring destinations are picked just for you.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {flights.slice(0, 4).map((flight) => (
-            <div key={flight.id} className="card p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center">
-                    <span className="text-blue-800 font-bold text-sm">{flight.logo}</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 line-clamp-1">{flight.airline}</h3>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Plane className="w-3 h-3 mr-1" />
-                      <span>{flight.from} → {flight.to}</span>
-                    </div>
-                  </div>
+            <div key={flight.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center">
+                  <span className="text-blue-800 font-bold text-sm">{flight.logo}</span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 line-clamp-1">{flight.airline}</h3>
+                  <p className="text-sm text-gray-600">{flight.from} → {flight.to}</p>
                 </div>
               </div>
               
@@ -108,8 +104,7 @@ export default function FeaturedFlights() {
                 </div>
                 <div className="flex-1 mx-4">
                   <div className="relative">
-                    <div className="border-t-2 border-gray-300 border-dashed absolute top-1/2 left-0 right-0"></div>
-                    <Plane className="w-4 h-4 text-blue-600 mx-auto relative bg-white transform rotate-90" />
+                    <Plane className="w-4 h-4 text-blue-600 mx-auto transform rotate-90" />
                   </div>
                 </div>
                 <div className="text-center">
@@ -118,15 +113,14 @@ export default function FeaturedFlights() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-2xl font-bold text-blue-600">USD {flight.price}.00</span>
-                </div>
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <span className="text-xl font-bold text-blue-600">${flight.price}</span>
                 <Link 
                   href={`/flights/${flight.id}`}
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium"
                 >
-                  Book Flights
+                  Book Flight
+                </Link>
               </div>
             </div>
           ))}
