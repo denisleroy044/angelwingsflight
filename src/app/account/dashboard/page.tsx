@@ -47,7 +47,7 @@ export default function AccountDashboardPage() {
     { 
       title: 'Search Flights', 
       icon: Plane, 
-      href: '/flights' as const,
+      href: '/flights',
       gradient: 'from-blue-500 to-blue-600',
       description: 'Find the best flight deals',
       stats: 'Save up to 30%'
@@ -55,7 +55,7 @@ export default function AccountDashboardPage() {
     { 
       title: 'Find Hotels', 
       icon: Hotel, 
-      href: '/hotels' as const,
+      href: '/hotels',
       gradient: 'from-green-500 to-green-600',
       description: 'Discover amazing stays',
       stats: '2000+ properties'
@@ -63,7 +63,7 @@ export default function AccountDashboardPage() {
     { 
       title: 'Rent a Car', 
       icon: Car, 
-      href: '/cars' as const,
+      href: '/cars',
       gradient: 'from-purple-500 to-purple-600',
       description: 'Get wheels for your trip',
       stats: 'Free cancellation'
@@ -71,7 +71,7 @@ export default function AccountDashboardPage() {
     { 
       title: 'Book Tours', 
       icon: Compass, 
-      href: '/tours' as const,
+      href: '/tours',
       gradient: 'from-orange-500 to-orange-600',
       description: 'Explore local experiences',
       stats: 'Best price guarantee'
@@ -291,7 +291,7 @@ export default function AccountDashboardPage() {
                     </div>
                     {booking.bookingId && (
                       <Link
-                        href={`/account/bookings/${booking.bookingId}` as const}
+                        href={`/account/bookings/${booking.bookingId}`}
                         className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium"
                       >
                         View Details
