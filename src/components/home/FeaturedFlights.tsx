@@ -127,7 +127,6 @@ export default function FeaturedFlights() {
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium"
                 >
                   Book Flights
-                </DynamicLink>
               </div>
             </div>
           ))}

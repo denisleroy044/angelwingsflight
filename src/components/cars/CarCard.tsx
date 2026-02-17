@@ -1,6 +1,6 @@
 'use client'
-import { Car, Users, Gauge, Fuel, Calendar } from 'lucide-react'
 import Link from 'next/link'
+import { Star, Users, Gauge, Fuel } from 'lucide-react'
 
 interface CarCardProps {
   car: {
@@ -13,67 +13,41 @@ interface CarCardProps {
     transmission: string
     fuel: string
     year: number
-    category: string
+    rating?: number
   }
-  featured?: boolean
 }
 
-export default function CarCard({ car, featured = false }: CarCardProps) {
+export default function CarCard({ car }: CarCardProps) {
   return (
-    <div className={`bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow ${featured ? 'border-2 border-blue-200' : ''}`}>
-      <div className="relative h-48 rounded-t-xl overflow-hidden bg-gray-100">
-        <img 
-          src={car.image} 
-          alt={car.name}
-          className="w-full h-full object-cover"
-        />
-        {featured && (
-          <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium">
-            Recommended
-          </div>
-        )}
-      </div>
-      
+    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <img src={car.image} alt={car.name} className="w-full h-48 object-cover" />
       <div className="p-6">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-semibold text-gray-900">{car.name}</h3>
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-lg font-semibold">{car.name}</h3>
           <span className="text-sm text-gray-600">{car.year}</span>
         </div>
-        
         <p className="text-sm text-gray-600 mb-4">{car.provider}</p>
 
-        {/* Car Specs */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="flex items-center space-x-2 text-gray-600">
-            <Users className="w-4 h-4" />
-            <span className="text-sm">{car.seats} seats</span>
+        <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="text-center">
+            <Users className="w-4 h-4 mx-auto mb-1" />
+            <span className="text-xs">{car.seats} seats</span>
           </div>
-          <div className="flex items-center space-x-2 text-gray-600">
-            <Gauge className="w-4 h-4" />
-            <span className="text-sm">{car.transmission}</span>
+          <div className="text-center">
+            <Gauge className="w-4 h-4 mx-auto mb-1" />
+            <span className="text-xs">{car.transmission}</span>
           </div>
-          <div className="flex items-center space-x-2 text-gray-600">
-            <Fuel className="w-4 h-4" />
-            <span className="text-sm">{car.fuel}</span>
-          </div>
-          <div className="flex items-center space-x-2 text-gray-600">
-            <Calendar className="w-4 h-4" />
-            <span className="text-sm">{car.category}</span>
+          <div className="text-center">
+            <Fuel className="w-4 h-4 mx-auto mb-1" />
+            <span className="text-xs">{car.fuel}</span>
           </div>
         </div>
 
-        {/* Price & Booking */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-          <div>
-            <p className="text-sm text-gray-600">Per day</p>
-            <p className="text-2xl font-bold text-blue-600">USD {car.price}.00</p>
-          </div>
-          <Link
-            href={`/cars/${car.id}`}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-          >
+        <div className="flex justify-between items-center pt-4 border-t">
+          <span className="text-2xl font-bold text-blue-600">${car.price}</span>
+          <Link href={`/cars/${car.id}`} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm">
             Book Now
-          </DynamicLink>
+          </Link>
         </div>
       </div>
     </div>

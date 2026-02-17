@@ -84,28 +84,15 @@ export default function AdminDashboardPage() {
     }
   }
 
-  const getStatusIcon = (status: string) => {
-    switch(status) {
-      case 'confirmed': return <CheckCircle className="w-3 h-3 mr-1" />
-      case 'pending': return <Clock className="w-3 h-3 mr-1" />
-      case 'completed': return <CheckCircle className="w-3 h-3 mr-1" />
-      default: return null
-    }
-  }
-
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-        <p className="text-gray-600">Welcome back, Admin! Here's what's happening with your business today.</p>
-      </div>
+      <h1 className="text-3xl font-bold">Admin Dashboard</h1>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Link href="/admin/bookings" className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group">
+        <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-2">
-            <div className="p-3 bg-blue-100 rounded-lg group-hover:scale-110 transition-transform">
+            <div className="p-3 bg-blue-100 rounded-lg">
               <DollarSign className="w-6 h-6 text-blue-600" />
             </div>
             <span className="text-sm text-green-600 flex items-center">
@@ -115,11 +102,11 @@ export default function AdminDashboardPage() {
           </div>
           <p className="text-2xl font-bold text-gray-900">${stats.totalRevenue.toLocaleString()}</p>
           <p className="text-sm text-gray-600">Total Revenue</p>
-        </DynamicLink>
+        </div>
 
-        <Link href="/admin/bookings" className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group">
+        <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-2">
-            <div className="p-3 bg-green-100 rounded-lg group-hover:scale-110 transition-transform">
+            <div className="p-3 bg-green-100 rounded-lg">
               <BookOpen className="w-6 h-6 text-green-600" />
             </div>
             <span className="text-sm text-green-600 flex items-center">
@@ -129,11 +116,11 @@ export default function AdminDashboardPage() {
           </div>
           <p className="text-2xl font-bold text-gray-900">{stats.totalBookings}</p>
           <p className="text-sm text-gray-600">Total Bookings</p>
-        </DynamicLink>
+        </div>
 
-        <Link href="/admin/users" className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group">
+        <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-2">
-            <div className="p-3 bg-purple-100 rounded-lg group-hover:scale-110 transition-transform">
+            <div className="p-3 bg-purple-100 rounded-lg">
               <Users className="w-6 h-6 text-purple-600" />
             </div>
             <span className="text-sm text-green-600 flex items-center">
@@ -143,11 +130,11 @@ export default function AdminDashboardPage() {
           </div>
           <p className="text-2xl font-bold text-gray-900">{stats.totalUsers}</p>
           <p className="text-sm text-gray-600">Total Users</p>
-        </DynamicLink>
+        </div>
 
-        <Link href="/admin/bookings" className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group">
+        <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-2">
-            <div className="p-3 bg-yellow-100 rounded-lg group-hover:scale-110 transition-transform">
+            <div className="p-3 bg-yellow-100 rounded-lg">
               <TrendingUp className="w-6 h-6 text-yellow-600" />
             </div>
             <span className="text-sm text-green-600 flex items-center">
@@ -157,20 +144,13 @@ export default function AdminDashboardPage() {
           </div>
           <p className="text-2xl font-bold text-gray-900">{stats.activeBookings}</p>
           <p className="text-sm text-gray-600">Active Bookings</p>
-        </DynamicLink>
+        </div>
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Revenue Chart */}
         <div className="bg-white rounded-xl shadow-sm p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Revenue Overview</h2>
-            <Link href="/admin/bookings" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-              View Details
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </DynamicLink>
-          </div>
+          <h2 className="text-lg font-semibold mb-4">Revenue Overview</h2>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={revenueData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -182,9 +162,8 @@ export default function AdminDashboardPage() {
           </ResponsiveContainer>
         </div>
 
-        {/* Bookings by Type */}
         <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Bookings by Type</h2>
+          <h2 className="text-lg font-semibold mb-4">Bookings by Type</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -192,10 +171,7 @@ export default function AdminDashboardPage() {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ name, percent }) => {
-                  const safePercent = percent || 0;
-                  return `${name} ${(safePercent * 100).toFixed(0)}%`;
-                }}
+                label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
                 outerRadius={100}
                 fill="#8884d8"
                 dataKey="value"
@@ -212,47 +188,29 @@ export default function AdminDashboardPage() {
 
       {/* Recent Bookings */}
       <div className="bg-white rounded-xl shadow-sm p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Bookings</h2>
-          <Link href="/admin/bookings" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-            View All
-            <ChevronRight className="w-4 h-4 ml-1" />
-          </DynamicLink>
-        </div>
+        <h2 className="text-lg font-semibold mb-4">Recent Bookings</h2>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Booking ID</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Customer</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Type</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Amount</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Date</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Status</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">Actions</th>
+                <th className="text-left py-3 px-4">Booking ID</th>
+                <th className="text-left py-3 px-4">Customer</th>
+                <th className="text-left py-3 px-4">Type</th>
+                <th className="text-left py-3 px-4">Amount</th>
+                <th className="text-left py-3 px-4">Status</th>
               </tr>
             </thead>
             <tbody>
               {recentBookings.map((booking) => (
-                <tr key={booking.id} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="py-3 px-4 text-sm font-mono text-gray-900">{booking.id}</td>
-                  <td className="py-3 px-4 text-sm text-gray-900">{booking.customer}</td>
-                  <td className="py-3 px-4 text-sm text-gray-600">{booking.type}</td>
-                  <td className="py-3 px-4 text-sm font-semibold text-blue-600">${booking.amount}</td>
-                  <td className="py-3 px-4 text-sm text-gray-600">{booking.date}</td>
+                <tr key={booking.id} className="border-b border-gray-100">
+                  <td className="py-3 px-4">{booking.id}</td>
+                  <td className="py-3 px-4">{booking.customer}</td>
+                  <td className="py-3 px-4">{booking.type}</td>
+                  <td className="py-3 px-4">${booking.amount}</td>
                   <td className="py-3 px-4">
-                    <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(booking.status)}`}>
-                      {getStatusIcon(booking.status)}
+                    <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(booking.status)}`}>
                       {booking.status}
                     </span>
-                  </td>
-                  <td className="py-3 px-4">
-                    <a
-                      href={`/admin/bookings/${booking.id}`}
-                      className="text-blue-600 hover:text-blue-700 text-sm font-medium"
-                    >
-                      View
-                    </a>
                   </td>
                 </tr>
               ))}
