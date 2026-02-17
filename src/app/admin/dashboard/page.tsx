@@ -14,7 +14,8 @@ import {
   ChevronRight,
   Calendar,
   Clock,
-  CheckCircle
+  CheckCircle,
+  XCircle
 } from 'lucide-react'
 import {
   BarChart,
@@ -80,6 +81,15 @@ export default function AdminDashboardPage() {
       case 'pending': return 'bg-yellow-100 text-yellow-800'
       case 'completed': return 'bg-blue-100 text-blue-800'
       default: return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getStatusIcon = (status: string) => {
+    switch(status) {
+      case 'confirmed': return <CheckCircle className="w-3 h-3 mr-1" />
+      case 'pending': return <Clock className="w-3 h-3 mr-1" />
+      case 'completed': return <CheckCircle className="w-3 h-3 mr-1" />
+      default: return null
     }
   }
 
@@ -183,10 +193,8 @@ export default function AdminDashboardPage() {
                 cy="50%"
                 labelLine={false}
                 label={({ name, percent }) => {
-                  // Safe handling with default values
-                  const safeName = name || 'Unknown';
                   const safePercent = percent || 0;
-                  return `${safeName} ${(safePercent * 100).toFixed(0)}%`;
+                  return `${name} ${(safePercent * 100).toFixed(0)}%`;
                 }}
                 outerRadius={100}
                 fill="#8884d8"
@@ -234,15 +242,17 @@ export default function AdminDashboardPage() {
                   <td className="py-3 px-4 text-sm text-gray-600">{booking.date}</td>
                   <td className="py-3 px-4">
                     <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(booking.status)}`}>
-                      {booking.status === 'confirmed' && <CheckCircle className="w-3 h-3 mr-1" />}
-                      {booking.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
+                      {getStatusIcon(booking.status)}
                       {booking.status}
                     </span>
                   </td>
                   <td className="py-3 px-4">
-                    <Link href={`/admin/bookings/${booking.id}`} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                    <a
+                      href={`/admin/bookings/${booking.id}`}
+                      className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    >
                       View
-                    </Link>
+                    </a>
                   </td>
                 </tr>
               ))}
