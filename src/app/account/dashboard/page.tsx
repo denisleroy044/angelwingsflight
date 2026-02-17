@@ -32,6 +32,9 @@ interface Booking {
   bookedAt?: string
 }
 
+// Define a type for route paths
+type RoutePath = '/flights' | '/hotels' | '/cars' | '/tours' | '/blogs' | '/account/bookings' | '/'
+
 export default function AccountDashboardPage() {
   const { data: session } = useSession()
   const [recentBookings, setRecentBookings] = useState<Booking[]>([])
@@ -42,8 +45,15 @@ export default function AccountDashboardPage() {
     setRecentBookings(bookings.slice(-3))
   }, [loadBookings])
 
-  // Quick Actions with enhanced styling
-  const quickActions = [
+  // Quick Actions with enhanced styling - typed as RoutePath
+  const quickActions: Array<{
+    title: string
+    icon: any
+    href: RoutePath
+    gradient: string
+    description: string
+    stats: string
+  }> = [
     { 
       title: 'Search Flights', 
       icon: Plane, 
@@ -232,7 +242,10 @@ export default function AccountDashboardPage() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-900">Recent Bookings</h2>
-          <Link href="/account/bookings" className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center group">
+          <Link
+            href="/account/bookings"
+            className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center group"
+          >
             View All
             <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
           </Link>
@@ -291,7 +304,7 @@ export default function AccountDashboardPage() {
                     </div>
                     {booking.bookingId && (
                       <Link
-                        href={`/account/bookings/${booking.bookingId}`}
+                        href={`/account/bookings/${booking.bookingId}` as const}
                         className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium"
                       >
                         View Details
