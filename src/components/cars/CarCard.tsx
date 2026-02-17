@@ -1,4 +1,3 @@
-import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { Car, Users, Gauge, Fuel, Calendar } from 'lucide-react'
 import Link from 'next/link'

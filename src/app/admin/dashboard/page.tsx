@@ -1,4 +1,3 @@
-import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'

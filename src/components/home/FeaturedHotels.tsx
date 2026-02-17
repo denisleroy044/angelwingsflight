@@ -1,4 +1,3 @@
-import DynamicLink from '@/components/ui/DynamicLink'
 import { Star, MapPin } from 'lucide-react'
 import Link from 'next/link'
 

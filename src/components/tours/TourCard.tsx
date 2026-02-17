@@ -1,4 +1,3 @@
-import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { MapPin, Star, Calendar, Users, Clock } from 'lucide-react'
 import Link from 'next/link'

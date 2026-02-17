@@ -1,4 +1,3 @@
-import DynamicLink from '@/components/ui/DynamicLink'
 import Link from 'next/link';
 
 const destinations = [

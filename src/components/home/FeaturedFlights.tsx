@@ -1,4 +1,3 @@
-import DynamicLink from '@/components/ui/DynamicLink'
 import { Plane, Clock, Users } from 'lucide-react'
 import Link from 'next/link'
 

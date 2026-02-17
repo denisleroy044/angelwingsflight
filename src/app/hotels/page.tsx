@@ -1,4 +1,3 @@
-import DynamicLink from '@/components/ui/DynamicLink'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import HotelSearchForm from '@/components/hotels/HotelSearchForm'

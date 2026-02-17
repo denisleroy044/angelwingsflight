@@ -1,4 +1,3 @@
-import DynamicLink from '@/components/ui/DynamicLink'
 'use client'
 import { Calendar, User, Clock, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
