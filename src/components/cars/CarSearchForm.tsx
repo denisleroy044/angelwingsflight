@@ -2,7 +2,8 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import DatePickerField from '@/components/ui/DatePickerField'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 interface FormData {
   pickupLocation: string;
@@ -30,17 +31,21 @@ export default function CarSearchForm() {
         placeholder="Pickup Location"
         className="w-full p-3 border rounded"
       />
-      <DatePickerField
+      <DatePicker
         selected={pickupDate}
-        onChange={setPickupDate}
+        onChange={(date: Date | null) => setPickupDate(date)}
         placeholderText="Pickup Date"
+        className="w-full p-3 border rounded"
         minDate={new Date()}
+        dateFormat="dd-MM-yyyy"
       />
-      <DatePickerField
+      <DatePicker
         selected={returnDate}
-        onChange={setReturnDate}
+        onChange={(date: Date | null) => setReturnDate(date)}
         placeholderText="Return Date"
+        className="w-full p-3 border rounded"
         minDate={pickupDate || new Date()}
+        dateFormat="dd-MM-yyyy"
       />
       <button type="submit" className="bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
         Search Cars

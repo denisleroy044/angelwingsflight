@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useRouter } from 'next/navigation'
-import DatePickerField from '@/components/ui/DatePickerField'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const flightSearchSchema = z.object({
   origin: z.string().min(3, "Airport code required"),
@@ -69,9 +70,23 @@ export default function FlightSearchForm() {
           <input {...register("destination")} placeholder="To" className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500" />
           {errors.destination && <p className="text-red-500 text-sm mt-1">{errors.destination.message}</p>}
         </div>
-        <DatePickerField selected={departDate} onChange={setDepartDate} placeholderText="Depart" minDate={new Date()} />
+        <DatePicker
+          selected={departDate}
+          onChange={(date: Date | null) => setDepartDate(date)}
+          placeholderText="Depart"
+          className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+          minDate={new Date()}
+          dateFormat="dd-MM-yyyy"
+        />
         {tripType === 'round' && (
-          <DatePickerField selected={returnDate} onChange={setReturnDate} placeholderText="Return" minDate={departDate || new Date()} />
+          <DatePicker
+            selected={returnDate}
+            onChange={(date: Date | null) => setReturnDate(date)}
+            placeholderText="Return"
+            className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+            minDate={departDate || new Date()}
+            dateFormat="dd-MM-yyyy"
+          />
         )}
       </div>
 
