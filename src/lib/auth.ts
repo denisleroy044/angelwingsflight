@@ -16,11 +16,10 @@ declare module "next-auth" {
       role: string;
     }
   }
-  
-  interface User {
-    role: string;
-  }
 }
+
+// We don't need to extend User if we're just adding a property that exists
+// The base User type already has an optional role property
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
