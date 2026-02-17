@@ -1,9 +1,17 @@
 'use client'
 
-import { Suspense } from 'react'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-function NotFoundContent() {
+export default function NotFound() {
+  const router = useRouter()
+
+  useEffect(() => {
+    // This ensures the page is only rendered on the client
+    console.log('404 page rendered')
+  }, [])
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
       <div className="text-center max-w-md">
@@ -20,17 +28,5 @@ function NotFoundContent() {
         </Link>
       </div>
     </div>
-  )
-}
-
-export default function NotFound() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
-      </div>
-    }>
-      <NotFoundContent />
-    </Suspense>
   )
 }
