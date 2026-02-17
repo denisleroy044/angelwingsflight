@@ -130,7 +130,7 @@ export default function AccountDashboardPage() {
     }
   ]
 
-  const getStatusColor = (status: string = 'pending') => {
+  const getStatusColor = (status?: string) => {
     switch(status) {
       case 'confirmed': return 'bg-green-100 text-green-800'
       case 'pending': return 'bg-yellow-100 text-yellow-800'
@@ -140,7 +140,7 @@ export default function AccountDashboardPage() {
     }
   }
 
-  const getStatusIcon = (status: string = 'pending') => {
+  const getStatusIcon = (status?: string) => {
     switch(status) {
       case 'confirmed': return '✓'
       case 'pending': return '⏳'
@@ -148,6 +148,11 @@ export default function AccountDashboardPage() {
       case 'cancelled': return '✗'
       default: return '•'
     }
+  }
+
+  const formatStatus = (status?: string) => {
+    if (!status) return 'Pending'
+    return status.charAt(0).toUpperCase() + status.slice(1)
   }
 
   const stats = [
@@ -274,7 +279,7 @@ export default function AccountDashboardPage() {
                         </p>
                         <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.status)}`}>
                           <span className="mr-1">{getStatusIcon(booking.status)}</span>
-                          {booking.status?.charAt(0).toUpperCase() + booking.status?.slice(1) || 'Pending'}
+                          {formatStatus(booking.status)}
                         </span>
                       </div>
                     </div>
