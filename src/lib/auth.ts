@@ -5,6 +5,23 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
 
+// Extend the built-in session types
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      role: string;
+    }
+  }
+  
+  interface User {
+    role: string;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
@@ -39,7 +56,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        // Explicitly cast user properties
         token.role = user.role;
         token.id = user.id;
       }
@@ -47,9 +63,9 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
-        // Cast token properties to string with fallback
-        session.user.role = token.role as string | undefined;
-        session.user.id = token.id as string | undefined;
+        // Ensure token properties exist with fallback values
+        session.user.role = (token.role as string) || 'USER';
+        session.user.id = (token.id as string) || '';
       }
       return session;
     }
