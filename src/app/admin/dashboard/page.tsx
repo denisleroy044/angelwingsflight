@@ -1,7 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import Link from 'next/link'
 import { 
   TrendingUp, 
@@ -13,12 +11,10 @@ import {
   Car,
   Compass,
   ArrowUp,
-  ArrowDown,
   ChevronRight,
   Calendar,
   Clock,
-  CheckCircle,
-  XCircle
+  CheckCircle
 } from 'lucide-react'
 import {
   BarChart,
@@ -38,9 +34,7 @@ import {
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
 
 export default function AdminDashboardPage() {
-  const { data: session } = useSession()
-  
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     totalBookings: 1250,
     totalRevenue: 450000,
     totalUsers: 890,
@@ -80,42 +74,6 @@ export default function AdminDashboardPage() {
     { id: 'BK005', customer: 'Charlie Wilson', type: 'Flight', amount: 670, status: 'confirmed', date: '2026-02-12' }
   ]
 
-  // Quick Actions Cards - These link to the actual pages
-  const quickActions = [
-    { 
-      title: 'Add New Flight', 
-      icon: Plane, 
-      href: '/admin/flights/new',
-      color: 'bg-blue-500',
-      description: 'Create a new flight route',
-      count: '12 routes'
-    },
-    { 
-      title: 'Add New Hotel', 
-      icon: Hotel, 
-      href: '/admin/hotels/new',
-      color: 'bg-green-500',
-      description: 'List a new hotel',
-      count: '8 pending'
-    },
-    { 
-      title: 'Add New Car', 
-      icon: Car, 
-      href: '/admin/cars/new',
-      color: 'bg-purple-500',
-      description: 'Add a rental car',
-      count: '5 available'
-    },
-    { 
-      title: 'Add New Tour', 
-      icon: Compass, 
-      href: '/admin/tours/new',
-      color: 'bg-orange-500',
-      description: 'Create a tour package',
-      count: '3 new'
-    }
-  ]
-
   const getStatusColor = (status: string) => {
     switch(status) {
       case 'confirmed': return 'bg-green-100 text-green-800'
@@ -125,21 +83,18 @@ export default function AdminDashboardPage() {
     }
   }
 
-  const getStatusIcon = (status: string) => {
-    switch(status) {
-      case 'confirmed': return <CheckCircle className="w-3 h-3 mr-1" />
-      case 'pending': return <Clock className="w-3 h-3 mr-1" />
-      case 'completed': return <CheckCircle className="w-3 h-3 mr-1" />
-      default: return null
-    }
-  }
+  const renderCustomizedLabel = ({ name, percent }: { name: string; percent?: number }) => {
+    // Handle case when percent is undefined
+    const percentage = percent ? (percent * 100).toFixed(0) : '0';
+    return `${name} ${percentage}%`;
+  };
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
-        <p className="text-gray-600">Welcome back, {session?.user?.name?.split(' ')[0] || 'Admin'}! Here's what's happening with your business today.</p>
+        <p className="text-gray-600">Welcome back, Admin! Here's what's happening with your business today.</p>
       </div>
 
       {/* Stats Cards */}
@@ -201,36 +156,6 @@ export default function AdminDashboardPage() {
         </Link>
       </div>
 
-      {/* Quick Actions - These link to actual pages */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {quickActions.map((action) => {
-            const Icon = action.icon
-            return (
-              <Link
-                key={action.title}
-                href={action.href}
-                className="group block p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all hover:-translate-y-1"
-              >
-                <div className={`w-12 h-12 ${action.color} rounded-lg flex items-center justify-center mb-3 text-white group-hover:scale-110 transition-transform`}>
-                  <Icon className="w-6 h-6" />
-                </div>
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {action.title}
-                  </h3>
-                  <span className="text-xs bg-white px-2 py-1 rounded-full shadow-sm">
-                    {action.count}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600">{action.description}</p>
-              </Link>
-            )
-          })}
-        </div>
-      </div>
-
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue Chart */}
@@ -263,7 +188,7 @@ export default function AdminDashboardPage() {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                label={renderCustomizedLabel}
                 outerRadius={100}
                 fill="#8884d8"
                 dataKey="value"
@@ -310,7 +235,8 @@ export default function AdminDashboardPage() {
                   <td className="py-3 px-4 text-sm text-gray-600">{booking.date}</td>
                   <td className="py-3 px-4">
                     <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(booking.status)}`}>
-                      {getStatusIcon(booking.status)}
+                      {booking.status === 'confirmed' && <CheckCircle className="w-3 h-3 mr-1" />}
+                      {booking.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
                       {booking.status}
                     </span>
                   </td>
@@ -324,30 +250,6 @@ export default function AdminDashboardPage() {
             </tbody>
           </table>
         </div>
-      </div>
-
-      {/* Quick Links to All Sections */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Link href="/admin/users" className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-4 text-white hover:shadow-lg transition-all hover:-translate-y-1">
-          <Users className="w-8 h-8 mb-2" />
-          <p className="font-semibold">Manage Users</p>
-          <p className="text-xs text-purple-100">{stats.totalUsers} total</p>
-        </Link>
-        <Link href="/admin/flights" className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-4 text-white hover:shadow-lg transition-all hover:-translate-y-1">
-          <Plane className="w-8 h-8 mb-2" />
-          <p className="font-semibold">Manage Flights</p>
-          <p className="text-xs text-blue-100">24 active</p>
-        </Link>
-        <Link href="/admin/hotels" className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-4 text-white hover:shadow-lg transition-all hover:-translate-y-1">
-          <Hotel className="w-8 h-8 mb-2" />
-          <p className="font-semibold">Manage Hotels</p>
-          <p className="text-xs text-green-100">18 properties</p>
-        </Link>
-        <Link href="/admin/tours" className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-4 text-white hover:shadow-lg transition-all hover:-translate-y-1">
-          <Compass className="w-8 h-8 mb-2" />
-          <p className="font-semibold">Manage Tours</p>
-          <p className="text-xs text-orange-100">12 packages</p>
-        </Link>
       </div>
     </div>
   )
