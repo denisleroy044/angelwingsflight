@@ -174,12 +174,12 @@ export default function WishlistPage() {
                       <p className="text-sm text-gray-600">Starting from</p>
                       <p className="text-xl font-bold text-blue-600">${item.price}</p>
                     </div>
-                    <Link
+                    <a
                       href={`/${item.type}s/${item.id}`}
                       className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                     >
                       View Details
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
