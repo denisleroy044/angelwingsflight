@@ -29,7 +29,7 @@ export default function AccountDashboardPage() {
     setRecentBookings(bookings.slice(-3))
   }, [loadBookings])
 
-  // Quick Actions with enhanced styling - using proper typed routes
+  // Quick Actions with enhanced styling
   const quickActions = [
     { 
       title: 'Search Flights', 
@@ -137,7 +137,6 @@ export default function AccountDashboardPage() {
     }
   }
 
-  // Stats for the welcome section
   const stats = [
     { label: 'Trips Planned', value: '12', icon: Calendar },
     { label: 'Countries Visited', value: '8', icon: MapPin },
@@ -178,7 +177,7 @@ export default function AccountDashboardPage() {
         </div>
       </div>
 
-      {/* Quick Actions with enhanced cards */}
+      {/* Quick Actions */}
       <div>
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -211,7 +210,7 @@ export default function AccountDashboardPage() {
         </div>
       </div>
 
-      {/* Recent Bookings with enhanced display */}
+      {/* Recent Bookings */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-900">Recent Bookings</h2>
@@ -272,12 +271,14 @@ export default function AccountDashboardPage() {
                       <p className="text-sm text-gray-600">Total</p>
                       <p className="text-2xl font-bold text-blue-600">${booking.price * (booking.quantity || 1)}</p>
                     </div>
-                    <Link
-                      href={`/account/bookings/${booking.bookingId}` as const}
-                      className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium"
-                    >
-                      View Details
-                    </Link>
+                    {booking.bookingId && (
+                      <Link
+                        href={`/account/bookings/${booking.bookingId}`}
+                        className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium"
+                      >
+                        View Details
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
@@ -286,7 +287,7 @@ export default function AccountDashboardPage() {
         )}
       </div>
 
-      {/* Enhanced Recommended for You */}
+      {/* Recommended for You */}
       <div>
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Recommended for You</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -340,7 +341,7 @@ export default function AccountDashboardPage() {
                   </div>
                 </div>
                 <Link
-                  href={`/${item.type}s/${item.id}` as const}
+                  href={`/${item.type}s/${item.id}`}
                   className="block w-full mt-4 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium text-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300"
                 >
                   View Details
